@@ -93,8 +93,6 @@
           <strong>Additional Information for the Canvass:</strong><br />
           Here are links to additional information that will be helpful for you
           to review prior to knocking on doors:
-        </mj-text>
-        <mj-text padding-top="0">
           <ul>
             <li>
               <a href="https://francescahong.com/policy/">Fran's Platform</a>
@@ -115,8 +113,6 @@
       <mj-column>
         <mj-text>
           <strong>For New Canvassers:</strong>
-        </mj-text>
-        <mj-text padding-top="0">
           <ul>
             <li>
               <strong
@@ -126,8 +122,8 @@
               buddy.
             </li>
             <li>
-              If you're new to canvassing, we'll train you before you go on how
-              to have successful conversations and on how to use MiniVAN.
+              If you're new to canvassing, we'll train you on how to have
+              successful conversations and on how to use MiniVAN.
             </li>
           </ul>
         </mj-text>
@@ -135,12 +131,10 @@
     </mj-section>
 
     <!-- MiniVAN -->
-    <mj-section padding="0px 40px">
+    <mj-section padding="0px 40px 0px 60px">
       <mj-column>
-        <mj-text padding-left="20px">
+        <mj-text>
           <strong>MiniVAN:</strong>
-        </mj-text>
-        <mj-text padding-top="0" padding-left="20px">
           <ul>
             <li>
               If you haven't already,
@@ -154,7 +148,7 @@
                 <a href="https://myaccount.ngpvan.com/CreateAccount">here</a
                 >.</strong
               >
-              <ul style="margin-top: 4px">
+              <ul>
                 <li>
                   If you already have an ActionID account, log in before your
                   shift to make sure you know your password.
@@ -172,19 +166,13 @@
     </mj-section>
 
     <!-- Questions -->
-    <mj-section padding="4px 40px 24px">
+    <mj-section padding="0px 40px">
       <mj-column>
-        <mj-text padding-left="20px">
+        <mj-text>
           <strong>Questions?</strong>
-        </mj-text>
-        <mj-text padding-top="0" padding-left="20px">
-          <ul>
-            <li>
-              Contact
-              <a href="mailto:nokings@garrettlow.net">nokings@garrettlow.net</a>
-              or text or call Garrett Low at 760-505-3848.
-            </li>
-          </ul>
+          Contact
+          <a href="mailto:nokings@garrettlow.net">nokings@garrettlow.net</a>
+          or text or call Garrett Low at 760-505-3848.
         </mj-text>
       </mj-column>
     </mj-section>
