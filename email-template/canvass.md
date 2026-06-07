@@ -19,6 +19,7 @@ Here are links to additional information that will be helpful for you to review 
 
 - [Canvass Script](https://drive.google.com/file/d/1kpSStr0Y_qd9y_FXkGIQRM2uyrAM_e8r/view?usp=drive_link)
 - [New Canvasser Guide](https://drive.google.com/file/d/1NkQDjQJ5ongKkv2m-nrdwglBKGUukfjv/view?usp=drive_link)
+- [Francesca Hong for Governor Talking Points](https://drive.google.com/file/d/1WqkX8jqteIviyS150d7l3dJBSI4mWXuh/view?usp=drive_link)
 - [Fran's Platform](https://francescahong.com/policy/)
 
 **For New Canvassers:**
@@ -34,5 +35,4 @@ Here are links to additional information that will be helpful for you to review 
 - This [video](https://www.youtube.com/watch?v=tv9-HHb1VQA) also provides information on how to use MiniVAN.
 
 **Questions?**
-
 Contact [nokings@garrettlow.net](mailto:nokings@garrettlow.net) or text or call Garrett Low at 760-505-3848.
