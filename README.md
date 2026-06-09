@@ -31,14 +31,16 @@ Building on top of the basic training, this lets you:
         4. Click the `Ward` field label to multi-select wards
             1. Check each ward in your RC
         5. You now have all the wards in this district selected
-        - ![Home Districts](./votebuilder-screenshots/phone_bank_example1.png)
+        <!-- - ![Home Districts](./votebuilder-screenshots/phone_bank_example1.png) -->
+        - <img src="./votebuilder-screenshots/phone_bank_example1.png" width="40%">
     2. Survey Questions:
         1. Question: `2026 Volunteer: Campaign Volunteer`
         2. Responses:
             1. `Yes - Doors`
             2. `Yes - Calls Only`
             3. `Yes - No DVC`
-        - ![Home Districts](./votebuilder-screenshots/phone_bank_example2.png)
+        <!-- - ![Home Districts](./votebuilder-screenshots/phone_bank_example2.png) -->
+        - <img src="./votebuilder-screenshots/phone_bank_example2.png" width="40%">
     3. Canvass Status
         1. `Exclude` people based on the following canvass results:
             1. Uncheck all canvass result checkboxes (excludes any canvass result)
@@ -47,7 +49,8 @@ Building on top of the basic training, this lets you:
             1. `Custom`
             2. `30` Days Ago to `0` Days Ago
     - Final result:
-        - ![Add Step Result](./votebuilder-screenshots/phone_bank_example3.png)
+        <!-- - ![Add Step Result](./votebuilder-screenshots/phone_bank_example3.png) -->
+        - <img src="./votebuilder-screenshots/phone_bank_example3.png" width="40%">
 4. On the right, click `Add Step` --> Click `Add People`
 5. Repeat step 3-4 for each **Civil District**
 
@@ -73,9 +76,11 @@ Autodialer currenlty uses `API` as the input type.
 
 `OpenVPB` for phone bankers using openvpb.
 
-![Contact History Example #1](./votebuilder-screenshots/contact_history_example1.png)
+<!-- ![Contact History Example #1](./votebuilder-screenshots/contact_history_example1.png) -->
+<!-- ![Contact History Example #1](./votebuilder-screenshots/contact_history_example2.png) -->
 
-![Contact History Example #1](./votebuilder-screenshots/contact_history_example2.png)
+<img src="./votebuilder-screenshots/contact_history_example1.png" width="40%">
+<img src="./votebuilder-screenshots/contact_history_example2.png" width="40%">
 
 # Javascript to automate ward checkboxes
 ```javascript
