@@ -46,7 +46,8 @@ Building on top of the basic training, this lets you:
         3. Date Canvassed: `In the range of`
             1. `Custom`
             2. `30` Days Ago to `0` Days Ago
-    - Final result:
+        - <img src="./votebuilder-screenshots/phone_bank_canvass_status.png" width="40%">
+    4. Final result should look like this:
         - <img src="./votebuilder-screenshots/phone_bank_example3.png" width="40%">
 4. On the right, click `Add Step` --> Click `Add People`
 5. Repeat step 3-4 for each **Civil District**
