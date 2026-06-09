@@ -70,7 +70,7 @@ Also, this is the list of Canvass Results that OpenVPB callers can select for no
 - Wrong Number
 - Disconnected
 
-Autodialer currenlty uses `API` as the input type.
+Autodialer currently uses `API` as the input type.
 
 `OpenVPB` for phone bankers using openvpb.
 
