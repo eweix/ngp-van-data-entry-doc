@@ -41,25 +41,24 @@ Building on top of the basic training, this lets you:
         - <img src="./votebuilder-screenshots/phone_bank_example2.png" width="40%">
     3. Canvass Status
         1. `Exclude` people based on the following canvass results:
-            1. Uncheck all canvass result checkboxes (excludes any canvass result)
+            1. Check `Canvassed`
         2. Contact Type: `Phone`
         3. Date Canvassed: `In the range of`
             1. `Custom`
-            2. `30` Days Ago to `0` Days Ago
+            2. `7` Days Ago to `0` Days Ago
         - <img src="./votebuilder-screenshots/phone_bank_canvass_status.png" width="40%">
 4. On the right, click `Add Step` --> Click `Add People`
 5. Repeat step 3-4 for each **Civil District**
 6. Final result should look like this:
     - <img src="./votebuilder-screenshots/phone_bank_example3.png" width="40%">
+7. Save your search following the naming convention (minus date since this is a reusable search)
 
-You now have a phone bank list for all wards in your RC that excludes anyone who has been called in the last 30 days.
+You now have a phone bank list for all wards in your RC that excludes anyone who has picked up the phone in the last 7 days.
 
 ## Alternative criteria
-Depending on your situation, you might want to only exclude people who picked up the phone.
+Depending on your situation, you might want to exclude any type of phone contact. Unchecking all the canvass results checkboxes will include any canvass result. Any canvass result + Contact Type: `Phone` = anyone who's been called.
 
-- Canvass Result: `Canvassed` + Input Type: `Phone` for people who answered the phone
-
-Also, this is the list of Canvass Results that OpenVPB callers can select for non-answers:
+This is the list of Canvass Results that OpenVPB callers can select for non-answers:
 - `Not Home`
 - `Refused`
 - `Deceased`
