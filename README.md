@@ -15,3 +15,116 @@ This documentation provides one way to accomplish a task. This is not the only w
 6. In the upper right, click `Export to CSV`
 
 You now have a CSV you can manipulate as needed (copy to canvass tracker spreadsheet, etc.)!
+
+# Create volunteer recruitment phone bank list (advanced)
+Building on top of the basic training, this lets you:
+- Include multiple districts and multiple wards from your RC
+- Exclude previously called people
+
+1. Go to `My Campaign` tab
+2. In sidebar, `Create a List`
+3. Criteria for Add Step:
+    1. Home Districts:
+        1. State: `Wisconsin`
+        2. County: `<your county>`
+        3. Civil District: `<your civil district>`
+        4. Click the `Ward` field label to multi-select wards
+            1. Check each ward in your RC
+        5. You now have all the wards in this district selected
+        - ![Home Districts](./votebuilder-screenshots/phone_bank_example1.png)
+    2. Survey Questions:
+        1. Question: `2026 Volunteer: Campaign Volunteer`
+        2. Responses:
+            1. `Yes - Doors`
+            2. `Yes - Calls Only`
+            3. `Yes - No DVC`
+        - ![Home Districts](./votebuilder-screenshots/phone_bank_example2.png)
+    3. Canvass Status
+        1. `Exclude` people based on the following canvass results:
+            1. Uncheck all canvass result checkboxes (excludes any canvass result)
+        2. Contact Type: `Phone`
+        3. Date Canvassed: `In the range of`
+            1. `Custom`
+            2. `30` Days Ago to `0` Days Ago
+    - Final result:
+        - ![Add Step Result](./votebuilder-screenshots/phone_bank_example2.png)
+4. On the right, click `Add Step` --> Click `Add People`
+5. Repeat step 3-4 for each **Civil District**
+
+You now have a phone bank list for all wards in your RC that excludes anyone who has been called in the last 30 days.
+
+## Alternative criteria
+Depending on your situation, you might want to only exclude people who picked up the phone.
+
+- Canvass Result: `Canvassed` + Input Type: `Phone` for people who answered the phone
+
+Also, this is the list of Canvass Results that OpenVPB callers can select for non-answers:
+- Not Home
+- Refused
+- Deceased
+- Moved
+- Call Back
+- Busy
+- Left Message
+- Wrong Number
+- Disconnected
+
+Autodialer currenlty uses `API` as the input type.
+
+`OpenVPB` for phone bankers using openvpb.
+
+![Contact History Example #1](./votebuilder-screenshots/contact_history_example1.png)
+
+![Contact History Example #1](./votebuilder-screenshots/contact_history_example2.png)
+
+# Javascript to automate ward checkboxes
+```javascript
+(function () {
+  const inputWards = [
+    "Dane - City Of Madison - Ward 058",
+    "Dane - City Of Madison - Ward 059",
+    "Dane - City Of Madison - Ward 060",
+    "Dane - City Of Madison - Ward 061",
+    "Dane - City Of Madison - Ward 062",
+    "Dane - City Of Madison - Ward 063",
+    "Dane - City Of Madison - Ward 064",
+    "Dane - City Of Madison - Ward 065",
+    "Dane - City Of Madison - Ward 066",
+    "Dane - City Of Madison - Ward 067",
+    "Dane - City Of Madison - Ward 069",
+  ];
+  const normalizeWhitespace = (s) =>
+    s
+      .replace(/[\s\u00a0]+/g, " ") // replace nbsp
+      .trim()
+      .toLowerCase();
+  const normalizedInputWards = new Set(inputWards.map(normalizeWhitespace));
+  let checkedCount = 0;
+  const foundWards = new Set();
+
+  document
+    .querySelectorAll('input[type="checkbox"][name="SelectedValues"]')
+    .forEach((checkbox) => {
+      const label = checkbox.closest("label");
+      if (!label) {
+        return;
+      }
+      const normalizedLabel = normalizeWhitespace(label.textContent);
+      if (normalizedInputWards.has(normalizedLabel)) {
+        checkbox.checked = true;
+        checkedCount++;
+        foundWards.add(normalizedLabel);
+      }
+    });
+
+  const notFoundWards = inputWards.filter(
+    (ward) => !foundWards.has(normalizeWhitespace(ward)),
+  );
+
+  console.log(`Checked ${checkedCount} of ${inputWards.length} wards.`);
+
+  if (notFoundWards.length) {
+    console.warn("Not found:", notFoundWards);
+  }
+})();
+```
