@@ -19,7 +19,7 @@ You now have a CSV you can manipulate as needed (copy to canvass tracker spreads
 # Create volunteer recruitment phone bank list (advanced)
 Building on top of the basic training, this lets you:
 - Include multiple civil districts and multiple wards from your RC
-- Exclude previously called people
+- Exclude people who were previously called and answered the phone
 
 1. Go to `My Campaign` tab
 2. In sidebar, `Create a List`
@@ -57,7 +57,7 @@ Building on top of the basic training, this lets you:
 You now have a phone bank list for all wards in your RC that excludes anyone who has picked up the phone in the last 7 days.
 
 ## Alternative criteria
-Depending on your situation, you might want to exclude any type of phone contact. Unchecking all the canvass results checkboxes will include any canvass result. Any canvass result + Contact Type: `Phone` = anyone who's been called.
+Depending on your situation, you might want to exclude any type of phone contact. Unchecking all the canvass results checkboxes will include any canvass result. In other words, `any canvass result` + Contact Type: `Phone` = anyone who's been called.
 
 This is the list of Canvass Results that OpenVPB callers can select for non-answers:
 - `Not Home`
