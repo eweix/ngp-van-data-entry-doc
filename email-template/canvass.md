@@ -25,6 +25,7 @@ Here are links to additional information that will be helpful for you to review 
 **For New Canvassers:**
 
 - **Interested in going out with an experienced canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
+- We recommend fully charging your phone before the canvass. Canvass results are recorded in the MiniVAN app, and we expect each canvass packet to take 1-2 hours to complete.
 - If you're new to canvassing, we'll train you on how to have successful conversations and on how to use MiniVAN.
 
 **MiniVAN:**
