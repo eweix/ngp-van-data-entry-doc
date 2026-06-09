@@ -18,7 +18,7 @@ You now have a CSV you can manipulate as needed (copy to canvass tracker spreads
 
 # Create volunteer recruitment phone bank list (advanced)
 Building on top of the basic training, this lets you:
-- Include multiple districts and multiple wards from your RC
+- Include multiple civil districts and multiple wards from your RC
 - Exclude previously called people
 
 1. Go to `My Campaign` tab
@@ -28,18 +28,16 @@ Building on top of the basic training, this lets you:
         1. State: `Wisconsin`
         2. County: `<your county>`
         3. Civil District: `<your civil district>`
+        - <img src="./votebuilder-screenshots/phone_bank_example1.png" width="40%">
         4. Click the `Ward` field label to multi-select wards
             1. Check each ward in your RC
         5. You now have all the wards in this district selected
-        <!-- - ![Home Districts](./votebuilder-screenshots/phone_bank_example1.png) -->
-        - <img src="./votebuilder-screenshots/phone_bank_example1.png" width="40%">
     2. Survey Questions:
         1. Question: `2026 Volunteer: Campaign Volunteer`
         2. Responses:
             1. `Yes - Doors`
             2. `Yes - Calls Only`
             3. `Yes - No DVC`
-        <!-- - ![Home Districts](./votebuilder-screenshots/phone_bank_example2.png) -->
         - <img src="./votebuilder-screenshots/phone_bank_example2.png" width="40%">
     3. Canvass Status
         1. `Exclude` people based on the following canvass results:
@@ -49,7 +47,6 @@ Building on top of the basic training, this lets you:
             1. `Custom`
             2. `30` Days Ago to `0` Days Ago
     - Final result:
-        <!-- - ![Add Step Result](./votebuilder-screenshots/phone_bank_example3.png) -->
         - <img src="./votebuilder-screenshots/phone_bank_example3.png" width="40%">
 4. On the right, click `Add Step` --> Click `Add People`
 5. Repeat step 3-4 for each **Civil District**
@@ -83,6 +80,8 @@ Autodialer currenlty uses `API` as the input type.
 <img src="./votebuilder-screenshots/contact_history_example2.png" width="40%">
 
 # Javascript to automate ward checkboxes
+- Replace with your list of wards
+
 ```javascript
 (function () {
   const inputWards = [
