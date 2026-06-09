@@ -54,7 +54,7 @@ Building on top of the basic training, this lets you:
     - <img src="./votebuilder-screenshots/phone_bank_example3.png" width="40%">
 7. Save your search following the naming convention (minus date since this is a reusable search)
 
-You now have a phone bank list for all wards in your RC that excludes anyone who has picked up the phone in the last 7 days.
+You now have a volunteer recruitment search for all wards in your RC that excludes anyone who has answered the phone in the last 7 days.
 
 ## Alternative criteria
 Depending on your situation, you might want to exclude any type of phone contact. Unchecking all the canvass results checkboxes will include any canvass result. In other words, `any canvass result` + Contact Type: `Phone` = anyone who's been called.
