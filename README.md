@@ -47,7 +47,7 @@ Building on top of the basic training, this lets you:
             1. `Custom`
             2. `30` Days Ago to `0` Days Ago
     - Final result:
-        - ![Add Step Result](./votebuilder-screenshots/phone_bank_example2.png)
+        - ![Add Step Result](./votebuilder-screenshots/phone_bank_example3.png)
 4. On the right, click `Add Step` --> Click `Add People`
 5. Repeat step 3-4 for each **Civil District**
 
