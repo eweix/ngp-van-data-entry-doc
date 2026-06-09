@@ -60,15 +60,15 @@ Depending on your situation, you might want to only exclude people who picked up
 - Canvass Result: `Canvassed` + Input Type: `Phone` for people who answered the phone
 
 Also, this is the list of Canvass Results that OpenVPB callers can select for non-answers:
-- Not Home
-- Refused
-- Deceased
-- Moved
-- Call Back
-- Busy
-- Left Message
-- Wrong Number
-- Disconnected
+- `Not Home`
+- `Refused`
+- `Deceased`
+- `Moved`
+- `Call Back`
+- `Busy`
+- `Left Message`
+- `Wrong Number`
+- `Disconnected`
 
 Autodialer currently uses `API` as the input type.
 
