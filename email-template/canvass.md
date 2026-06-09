@@ -1,4 +1,4 @@
-Hello [VOLUNTEER FIRST NAME], we're glad you're joining us on **[FULL DATE]** at **[START TIME]** to canvass in support of Francesca Hong for Governor!
+Hello, we're glad you're joining us on **[FULL DATE]** at **[START TIME]** to canvass in support of Francesca Hong for Governor!
 
 **When:** [START TIME], [FULL DATE]
 
