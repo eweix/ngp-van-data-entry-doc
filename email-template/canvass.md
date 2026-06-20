@@ -35,5 +35,8 @@ Here are links to additional information that will be helpful for you to review 
   - If you already have an ActionID account, log in before your shift to make sure you know your password.
 - This [video](https://www.youtube.com/watch?v=tv9-HHb1VQA) also provides information on how to use MiniVAN.
 
+**Upcoming Events:**
+- [Link to Upcoming Events](https://blahblah)
+
 **Questions?**
 Contact [nokings@garrettlow.net](mailto:nokings@garrettlow.net) or text or call Garrett Low at 760-505-3848.
