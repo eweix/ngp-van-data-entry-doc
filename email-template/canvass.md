@@ -14,6 +14,25 @@ We will be talking to our neighbors about supporting Rep. Hong in the Wisconsin 
 **Who:**
 Our doors are likely primary voters, who generally vote Democratic.
 
+**MiniVAN:**
+We record canvass results in the MiniVAN app.
+
+- Fully charge your phone before the canvass, as we expect each canvass packet to take 1-2 hours to complete
+- If you haven't already, **download the MiniVAN app** (logo has eight circles around one circle)
+- If you don't already have an ActionID account, set one up before arriving at the canvass. **Create an ActionID account [here](https://myaccount.ngpvan.com/CreateAccount).**
+  - If you already have an ActionID account, log in before your shift to make sure you know your password.
+- This [video](https://www.youtube.com/watch?v=tv9-HHb1VQA) also provides information on how to use MiniVAN.
+
+**Signal:**
+We use a Signal group chat for communication and questions during the canvass.
+
+- If you haven't already, **download the Signal Private Messenger app**
+
+**For New Canvassers:**
+
+- **Interested in going out with an experienced canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
+- If you're new to canvassing, we'll train you on how to have successful conversations and on how to use MiniVAN.
+
 **Additional Information for the Canvass:**
 Here are links to additional information that will be helpful for you to review prior to knocking on doors:
 
@@ -22,21 +41,9 @@ Here are links to additional information that will be helpful for you to review 
 - [Francesca Hong for Governor Talking Points](https://drive.google.com/file/d/1WqkX8jqteIviyS150d7l3dJBSI4mWXuh/view?usp=drive_link)
 - [Fran's Platform](https://francescahong.com/policy/)
 
-**For New Canvassers:**
-
-- **Interested in going out with an experienced canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
-- We recommend fully charging your phone before the canvass. Canvass results are recorded in the MiniVAN app, and we expect each canvass packet to take 1-2 hours to complete.
-- If you're new to canvassing, we'll train you on how to have successful conversations and on how to use MiniVAN.
-
-**MiniVAN:**
-
-- If you haven't already, **download the MiniVAN canvassing app**
-- If you don't already have an ActionID account, set one up before arriving at the canvass. **Create an ActionID account [here](https://myaccount.ngpvan.com/CreateAccount).**
-  - If you already have an ActionID account, log in before your shift to make sure you know your password.
-- This [video](https://www.youtube.com/watch?v=tv9-HHb1VQA) also provides information on how to use MiniVAN.
-
 **Upcoming Events:**
-- [Link to Upcoming Events](https://blahblah)
+- [Link to Upcoming Event #1](https://blahblah)
+- [Link to Upcoming Event #2](https://blahblah)
 
 **Questions?**
 Contact [nokings@garrettlow.net](mailto:nokings@garrettlow.net) or text or call Garrett Low at 760-505-3848.
