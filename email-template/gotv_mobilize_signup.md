@@ -39,6 +39,7 @@ Here are links to additional information that will be helpful for you to review 
 - [Fran's Platform](https://francescahong.com/policy/)
 
 **Upcoming Events:**
+
 - [franhong.com/gotv](https://franhong.com/gotv)
 - [Dane Daily Calls for Fran!](https://www.mobilize.us/francescahongforwisconsin/event/991277/)
 
