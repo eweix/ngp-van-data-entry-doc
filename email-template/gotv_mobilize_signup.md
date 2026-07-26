@@ -10,14 +10,14 @@ We've prioritized doors by density and likelihood to vote for progressive candid
 
 **What to bring:**
 
-- Fully charged phone with miniVAN installed (see below)
+- Fully charged phone with MiniVAN installed (see below)
 - Water bottle
 - Comfortable shoes and clothes for walking
 
 **MiniVAN:**
 We record survey results in the MiniVAN app.
 
-- **Download the MiniVAN app** (logo has eight circles around one circle): [Google Play Store](https://play.google.com/store/apps/details?id=com.voteractivationnetwork.minivan), [App Store](https://apps.apple.com/us/app/minivan-touch/id352087547)
+- **Download the MiniVAN app**: [Google Play Store](https://play.google.com/store/apps/details?id=com.voteractivationnetwork.minivan), [App Store](https://apps.apple.com/us/app/minivan-touch/id352087547) (logo has eight circles around one circle)
 - **Create an ActionID account [here](https://myaccount.ngpvan.com/CreateAccount).**
     - If you already have an ActionID account, log in before your shift to make sure you know your password.
 
