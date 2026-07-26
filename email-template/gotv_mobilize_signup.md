@@ -3,24 +3,21 @@ Hello, we're glad you're joining us to Get Out the Vote (GOTV) in support of Fra
 **Where:** 4401 Waite Ln, Madison, WI 53711
 
 **Why:**
-We will be talking to our neighbors about supporting Francesca Hong in the August 11th primary, their plan to vote, and if they're interested in volunteering
+We will be talking to our neighbors about supporting Francesca Hong in the August 11th primary, their plan to vote, and if they're interested in volunteering.
 
 **Who:**
-We've prioritized doors by density and likelihood to vote in primaries for progressive candidates.
+We've prioritized doors by density and likelihood to vote for progressive candidates.
 
 **What to bring:**
 
 - Fully charged phone with miniVAN installed (see below)
 - Water bottle
 - Comfortable shoes and clothes for walking
-- An open and positive attitude
 
 **MiniVAN:**
 We record survey results in the MiniVAN app.
 
-- **Download the MiniVAN app: (logo has eight circles around one circle)**
-    - [Google Play Store](https://play.google.com/store/apps/details?id=com.voteractivationnetwork.minivan)
-    - [App Store](https://apps.apple.com/us/app/minivan-touch/id352087547)
+- **Download the MiniVAN app** (logo has eight circles around one circle): [Google Play Store](https://play.google.com/store/apps/details?id=com.voteractivationnetwork.minivan), [App Store](https://apps.apple.com/us/app/minivan-touch/id352087547)
 - **Create an ActionID account [here](https://myaccount.ngpvan.com/CreateAccount).**
     - If you already have an ActionID account, log in before your shift to make sure you know your password.
 
