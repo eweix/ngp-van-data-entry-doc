@@ -9,6 +9,7 @@ We will be talking to our neighbors about supporting Francesca Hong in the Augus
 We've prioritized doors by density and likelihood to vote in primaries for progressive candidates.
 
 **What to bring:**
+
 - Fully charged phone with miniVAN installed (see below)
 - Water bottle
 - Comfortable shoes and clothes for walking
