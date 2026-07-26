@@ -1,0 +1,45 @@
+Hello, we're glad you're joining us to Get Out the Vote (GOTV) in support of Francesca Hong for Governor!
+
+**Where:** 4401 Waite Ln, Madison, WI 53711
+
+**Why:**
+We will be talking to our neighbors about their plan to vote for Francesca Hong in the August 11th primary. We will also be asking if they'd like to join the movement by volunteering.
+
+**Who:**
+We've prioritized doors by density and likelihood to vote in primaries for progressive candidates.
+
+**What to bring:**
+- Fully charged phone with miniVAN installed (see below)
+- Water bottle
+- Comfortable shoes and clothes for walking
+- An open and positive attitude
+
+**MiniVAN:**
+We record survey results in the MiniVAN app.
+
+- **Download the MiniVAN app: (logo has eight circles around one circle)**
+  - [Google Play Store](https://play.google.com/store/apps/details?id=com.voteractivationnetwork.minivan)
+  - [App Store](https://apps.apple.com/us/app/minivan-touch/id352087547)
+- **Create an ActionID account [here](https://myaccount.ngpvan.com/CreateAccount).**
+  - If you already have an ActionID account, log in before your shift to make sure you know your password.
+- This [video](https://www.youtube.com/watch?v=tv9-HHb1VQA) also provides information on how to use MiniVAN.
+
+**For New Canvassers:**
+
+- **Interested in going out with an experienced canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
+- If you're new to canvassing, we'll train you on how to have successful conversations and on how to use MiniVAN.
+
+**Additional Information for the Canvass:**
+Here are links to additional information that will be helpful for you to review prior to knocking on doors:
+- [GOTV Script](https://drive.google.com/file/d/1QTNc7YPggi_fVB_sxlNGsTt7QJCMPgrJ/view?usp=drive_link)
+- [GOTV Guide (West Madison)](https://drive.google.com/file/d/1V_B2ZQVcbp1Hc0pvDYKMoeixR6wrmLOt/view?usp=drive_link)
+- [New Canvasser Guide](https://drive.google.com/file/d/1NkQDjQJ5ongKkv2m-nrdwglBKGUukfjv/view?usp=drive_link)
+- [Francesca Hong for Governor Talking Points](https://drive.google.com/file/d/1WqkX8jqteIviyS150d7l3dJBSI4mWXuh/view?usp=drive_link)
+- [Fran's Platform](https://francescahong.com/policy/)
+
+**Upcoming Events:**
+- [franhong.com/gotv](https://franhong.com/gotv)
+- [Dane Daily Calls for Fran!](https://www.mobilize.us/francescahongforwisconsin/event/991277/)
+
+**Questions?**
+Contact your canvass captain, or text or call Garrett Low at 760-505-3848.
