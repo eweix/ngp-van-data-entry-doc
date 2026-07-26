@@ -31,8 +31,11 @@ We record survey results in the MiniVAN app.
 **Additional Information for the Canvass:**
 Here are links to additional information that will be helpful for you to review prior to knocking on doors:
 
-- [GOTV Script](https://drive.google.com/file/d/1QTNc7YPggi_fVB_sxlNGsTt7QJCMPgrJ/view?usp=drive_link), [GOTV Guide (West Madison)](https://drive.google.com/file/d/1V_B2ZQVcbp1Hc0pvDYKMoeixR6wrmLOt/view?usp=drive_link), [New Canvasser Guide](https://drive.google.com/file/d/1NkQDjQJ5ongKkv2m-nrdwglBKGUukfjv/view?usp=drive_link)
-- [Francesca Hong for Governor Talking Points](https://drive.google.com/file/d/1WqkX8jqteIviyS150d7l3dJBSI4mWXuh/view?usp=drive_link), [Fran's Platform](https://francescahong.com/policy/)
+- [GOTV Script](https://drive.google.com/file/d/1QTNc7YPggi_fVB_sxlNGsTt7QJCMPgrJ/view?usp=drive_link)
+- [GOTV Guide (West Madison)](https://drive.google.com/file/d/1V_B2ZQVcbp1Hc0pvDYKMoeixR6wrmLOt/view?usp=drive_link)
+- [New Canvasser Guide](https://drive.google.com/file/d/1NkQDjQJ5ongKkv2m-nrdwglBKGUukfjv/view?usp=drive_link)
+- [Francesca Hong for Governor Talking Points](https://drive.google.com/file/d/1WqkX8jqteIviyS150d7l3dJBSI4mWXuh/view?usp=drive_link)
+- [Fran's Platform](https://francescahong.com/policy/)
 
 **Upcoming Events:**
 - [franhong.com/gotv](https://franhong.com/gotv)
