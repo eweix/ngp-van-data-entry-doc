@@ -5,8 +5,9 @@ from pathlib import Path
 # import subprocess
 import pymupdf
 import csv
+import argparse
 
-def turf_pdf_to_csv():
+def turf_pdf_to_csv(target_dir):
     # cwd = os.getcwd()
     # files = [f for f in os.listdir(cwd) if os.path.isfile(os.path.join(cwd, f))]
     #
@@ -18,12 +19,12 @@ def turf_pdf_to_csv():
     #         continue
     #     if not os.path.splitext
 
-    cwd = Path(__file__).parent.resolve()
-    # print(cwd)
+    # target_dir = Path(__file__).parent.resolve()
+    # print(target_dir)
 
     map_region_pdf_list = []
 
-    for item in cwd.iterdir():
+    for item in target_dir.iterdir():
         if not item.is_file():
             continue
         if item.suffix != ".pdf":
@@ -77,5 +78,29 @@ def is_list_number(line):
              line[:8].isdigit() and 
              line[9:].isdigit())
 
+def main():
+    parser = argparse.ArgumentParser(prog='turf_pdf_to_csv',
+                                     description='Turn turf PDFs into CSV')
+    parser.add_argument("dir",
+                        nargs="?",
+                        type=Path,
+                        default=None,
+                        help="Specify a directory containing PDFs to parse. Default: cwd")
+
+    parser.add_argument("--dir",
+                        nargs="?",
+                        type=Path,
+                        default=None,
+                        dest="dir_flag")
+
+    args = parser.parse_args()
+
+    target_dir = args.dir or args.dir_flag or Path.cwd()
+    
+    turf_pdf_to_csv(target_dir)
+
+    return
+
 if __name__ == "__main__":
-    turf_pdf_to_csv()
+    # turf_pdf_to_csv()
+    main()
