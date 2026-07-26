@@ -23,7 +23,7 @@ We record survey results in the MiniVAN app.
 
 **For New Canvassers:**
 
-- **Interested in going out with an experienced canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
+- **Interested in going out with another canvasser?** Let us know prior to the canvass so we can pair you up with a buddy.
 - If you're new to canvassing, we'll train you on how to have successful conversations and on how to use MiniVAN.
 
 **Additional Information for the Canvass:**
