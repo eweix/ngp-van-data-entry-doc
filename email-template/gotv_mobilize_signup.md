@@ -3,7 +3,7 @@ Hello, we're glad you're joining us to Get Out the Vote (GOTV) in support of Fra
 **Where:** 4401 Waite Ln, Madison, WI 53711
 
 **Why:**
-We will be talking to our neighbors about their plan to vote for Francesca Hong in the August 11th primary. We will also be asking if they'd like to join the movement by volunteering.
+We will be talking to our neighbors about supporting Francesca Hong in the August 11th primary.
 
 **Who:**
 We've prioritized doors by density and likelihood to vote in primaries for progressive candidates.
