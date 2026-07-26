@@ -2,10 +2,12 @@
 # import os.path
 import sys
 from pathlib import Path
+
 # import subprocess
 import pymupdf
 import csv
 import argparse
+
 
 def turf_pdf_to_csv(target_dir):
     # cwd = os.getcwd()
@@ -55,51 +57,55 @@ def turf_pdf_to_csv(target_dir):
             for line_num, line in enumerate(map_region_page_lines):
                 if not is_list_number(line):
                     continue
-                
+
                 # print(line)
 
                 list_number = line
                 turf_number = map_region_page_lines[line_num + 1]
                 door_count = map_region_page_lines[line_num + 3]
-                
-                output_list.append((list_number,
-                                   turf_number,
-                                   door_count))
-    
+
+                output_list.append((list_number, turf_number, door_count))
+
     stdout_writer = csv.writer(sys.stdout)
-    stdout_writer.writerow(["list_number","turf_number","door_count"])
+    stdout_writer.writerow(["list_number", "turf_number", "door_count"])
     stdout_writer.writerows(output_list)
-    
+
     return
 
+
 def is_list_number(line):
-    return (len(line) == 14 and
-             line[8] == "-" and 
-             line[:8].isdigit() and 
-             line[9:].isdigit())
+    return (
+        len(line) == 14 and line[8] == "-" and line[:8].isdigit() and line[9:].isdigit()
+    )
+
 
 def main():
-    parser = argparse.ArgumentParser(prog='turf_pdf_to_csv',
-                                     description='Turn turf PDFs into CSV')
-    parser.add_argument("dir",
-                        nargs="?",
-                        type=Path,
-                        default=None,
-                        help="Specify a directory containing PDFs to parse. Default: cwd")
+    parser = argparse.ArgumentParser(
+        prog="turf_pdf_to_csv", description="Turn turf PDFs into CSV"
+    )
+    parser.add_argument(
+        "dir",
+        nargs="?",
+        type=Path,
+        default=None,
+        help="Specify a directory containing PDFs to parse. Default: cwd",
+    )
 
-    parser.add_argument("--dir",
-                        nargs="?",
-                        type=Path,
-                        default=None,
-                        dest="dir_flag")
+    parser.add_argument(
+        "--dir",
+        nargs="?",
+        type=Path,
+        default=None,
+        help="Specify a directory containing PDFs to parse. Default: cwd",
+        dest="dir_flag",
+    )
 
     args = parser.parse_args()
 
     target_dir = args.dir or args.dir_flag or Path.cwd()
-    
+
     turf_pdf_to_csv(target_dir)
 
-    return
 
 if __name__ == "__main__":
     # turf_pdf_to_csv()
