@@ -1,9 +1,10 @@
-import os
-import os.path
+# import os
+# import os.path
 import sys
 from pathlib import Path
 # import subprocess
 import pymupdf
+import csv
 
 def turf_pdf_to_csv():
     # cwd = os.getcwd()
@@ -18,9 +19,9 @@ def turf_pdf_to_csv():
     #     if not os.path.splitext
 
     cwd = Path(__file__).parent.resolve()
-    print(cwd)
+    # print(cwd)
 
-    pdf_list = []
+    map_region_pdf_list = []
 
     for item in cwd.iterdir():
         if not item.is_file():
@@ -28,30 +29,53 @@ def turf_pdf_to_csv():
         if item.suffix != ".pdf":
             continue
 
-        pdf_list.append(item)
+        map_region_pdf_list.append(item)
 
-    print(pdf_list)
+    # print(map_region_pdf_list)
 
     # for pdf in pdf_list:
     #     pdf_path = pdf.resolve()
     #     subprocess.call(['pdftotext', pdf_path])
 
-    for pdf_path in pdf_list:
-        pdf_obj = pymupdf.open(pdf_path.resolve())
+    output_list = []
+
+    for map_region_pdf in map_region_pdf_list:
+        map_region_doc = pymupdf.open(map_region_pdf.resolve())
 
         # page_num = 0 # this is weird I don't know the python way to do this
 
         # I hope we don't have any single ward with more than 3 pages of turfs
-        for page in pdf_obj[:3]:
-            text = page.get_text()
-            print(text)
+        for page in map_region_doc[:3]:
+            map_region_page = page.get_text()
+            # print(map_region_page)
 
-            # page_num += 1
-            # if page_num > 2:
-            #     break
+            map_region_page_lines = map_region_page.splitlines()
 
+            for line_num, line in enumerate(map_region_page_lines):
+                if not is_list_number(line):
+                    continue
+                
+                # print(line)
 
+                list_number = line
+                turf_number = map_region_page_lines[line_num + 1]
+                door_count = map_region_page_lines[line_num + 3]
+                
+                output_list.append((list_number,
+                                   turf_number,
+                                   door_count))
+    
+    stdout_writer = csv.writer(sys.stdout)
+    stdout_writer.writerow(["list_number","turf_number","door_count"])
+    stdout_writer.writerows(output_list)
+    
+    return
 
+def is_list_number(line):
+    return (len(line) == 14 and
+             line[8] == "-" and 
+             line[:8].isdigit() and 
+             line[9:].isdigit())
 
 if __name__ == "__main__":
     turf_pdf_to_csv()
