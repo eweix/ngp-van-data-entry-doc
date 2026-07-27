@@ -23,15 +23,12 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
 
             if (page_num == 0) and map_region_page_lines:
                 # Get the map region name from first page
-                # Split on space instead of dash because the dash is weird
-                turf_packet_summary_split = map_region_page_lines[0].split()
-
-                # Protect against turf PDF missing the "Turf Packet Summary - <Map Region Name>" line
-                if len(turf_packet_summary_split) > 4:
-                    region_name_raw = turf_packet_summary_split[4]
-                    region_name_split = region_name_raw.split("_")
-                else:
-                    region_name_split = []
+                turf_packet_summary_line = map_region_page_lines[0]
+                map_region_name_raw = turf_packet_summary_line[len("Turf Packet Summary - "):]
+                if map_region_name_raw == "":
+                    break
+                
+                region_name_split = map_region_name_raw.split("_")
 
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
@@ -69,10 +66,17 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                     continue
 
                 list_number = line
-                turf_number = map_region_page_lines[line_num + 1]
-                door_count = map_region_page_lines[line_num + 3]
+                if len(map_region_page_lines) >= line_num + 1:
+                    turf_number = map_region_page_lines[line_num + 1]
+                else:
+                    turf_number = ""
+                
+                if len(map_region_page_lines) >= line_num + 3:
+                    door_count = map_region_page_lines[line_num + 3]
+                else:
+                    door_count = ""
 
-                output_list.append((region_name_raw,
+                output_list.append((map_region_name_raw,
                                     civil_district_name, 
                                     civil_district_type,
                                     ward_number,
