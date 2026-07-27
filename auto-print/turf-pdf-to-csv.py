@@ -28,8 +28,8 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
 
                 # Protect against turf PDF missing the "Turf Packet Summary - <Map Region Name>" line
                 if len(turf_packet_summary_split) > 4:
-                    region_name = turf_packet_summary_split[4]
-                    region_name_split = region_name.split("_")
+                    region_name_raw = turf_packet_summary_split[4]
+                    region_name_split = region_name_raw.split("_")
                 else:
                     region_name_split = []
 
@@ -70,19 +70,39 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                 turf_number = map_region_page_lines[line_num + 1]
                 door_count = map_region_page_lines[line_num + 3]
 
-                output_list.append((civil_district_name, civil_district_type, ward_number,list_number, turf_number, door_count))
+                output_list.append((region_name_raw,
+                                    civil_district_name, 
+                                    civil_district_type,
+                                    ward_number,
+                                    list_number, 
+                                    turf_number,
+                                    door_count))
 
     # Write output
     timestamp = time.strftime(("%Y%m%d-%H%M-%S"))
     output_filename = "turf_list_" + timestamp + ".csv"
     if is_stdout:
         stdout_writer = csv.writer(sys.stdout)
-        stdout_writer.writerow(["civil_district_name", "civil_district_type", "ward_number", "list_number", "turf_number", "door_count"])
+        stdout_writer.writerow([
+            "region_name_raw", 
+            "civil_district_name", 
+            "civil_district_type",
+            "ward_number", 
+            "list_number", 
+            "turf_number", 
+            "door_count"])
         stdout_writer.writerows(output_list)
     else:
         with open(output_filename, newline = "", mode="w") as csvfile:
             csvfile_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
-            csvfile_writer.writerow(["civil_district_name", "civil_district_type", "ward_number", "list_number", "turf_number", "door_count"])
+            csvfile_writer.writerow([
+                "region_name_raw", 
+                "civil_district_name",
+                "civil_district_type",
+                "ward_number",
+                "list_number",
+                "turf_number",
+                "door_count"])
             csvfile_writer.writerows(output_list)
 
         print(f"Output: {Path(output_filename).resolve()}")
