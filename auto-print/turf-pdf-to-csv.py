@@ -1,83 +1,105 @@
-# import os
-# import os.path
 import sys
 from pathlib import Path
-
-# import subprocess
 import pymupdf
 import csv
 import argparse
+import time
 
-
-def turf_pdf_to_csv(target_dir):
-    # cwd = os.getcwd()
-    # files = [f for f in os.listdir(cwd) if os.path.isfile(os.path.join(cwd, f))]
-    #
-    # for file in files:
-    #     print(file)
-    #
-    # for item in os.listdir(cwd):
-    #     if not os.path.isfile(os.path.join(cwd, item)):
-    #         continue
-    #     if not os.path.splitext
-
-    # target_dir = Path(__file__).parent.resolve()
-    # print(target_dir)
-
+def turf_pdf_to_csv(target_dir_list, is_stdout):
     map_region_pdf_list = []
+    for target_dir in target_dir_list:
+        map_region_pdf_list.extend(get_child_pdf(target_dir))
 
+    # Parse first couple of pages of map region PDFs
+    output_list = []
+    for map_region_pdf in map_region_pdf_list:
+        map_region_doc = pymupdf.open(map_region_pdf.resolve())
+
+        # I hope we don't have any single ward with more than 3 pages of turfs
+        for page_num, page in enumerate(map_region_doc[:3]):
+            map_region_page = page.get_text()
+
+            map_region_page_lines = map_region_page.splitlines()
+
+            if (page_num == 0) and map_region_page_lines:
+                # Get the map region name from first page
+                # Split on space instead of dash because the dash is weird
+                turf_packet_summary_split = map_region_page_lines[0].split()
+
+                # Protect against turf PDF missing the "Turf Packet Summary - <Map Region Name>" line
+                if len(turf_packet_summary_split) > 4:
+                    region_name = turf_packet_summary_split[4]
+                    region_name_split = region_name.split("_")
+                else:
+                    region_name_split = []
+
+                # Protect against poorly named map regions
+                if len(region_name_split) > 2:
+                    district_types = ["City", "Town", "Village"]
+                    civil_district = region_name_split[2]
+                    for district_type in district_types:
+                        civil_district_lower = civil_district.lower()
+                        district_type_lower = district_type.lower()
+                        if civil_district_lower.endswith(district_type_lower):
+                            civil_district_name = civil_district[:-len(district_type_lower)]
+                            civil_district_type = district_type
+                            break
+                    else:
+                        civil_district_name = civil_district
+                        civil_district_type = ""
+
+                else:
+                    civil_district_name = ""
+                    civil_district_type = ""
+
+                if len(region_name_split) > 3:
+                    ward_number = region_name_split[3].zfill(4)
+                else:
+                    ward_number = ""
+
+            for line_num, line in enumerate(map_region_page_lines):
+                if not is_list_number(line):
+                    continue
+
+                list_number = line
+                turf_number = map_region_page_lines[line_num + 1]
+                door_count = map_region_page_lines[line_num + 3]
+
+                output_list.append((civil_district_name, civil_district_type, ward_number,list_number, turf_number, door_count))
+
+    # Write output
+    timestamp = time.strftime(("%Y%m%d-%H%M-%S"))
+    output_filename = "turf_list_" + timestamp + ".csv"
+    if is_stdout:
+        stdout_writer = csv.writer(sys.stdout)
+        stdout_writer.writerow(["civil_district_name", "civil_district_type", "ward_number", "list_number", "turf_number", "door_count"])
+        stdout_writer.writerows(output_list)
+    else:
+        with open(output_filename, newline = "", mode="w") as csvfile:
+            csvfile_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
+            csvfile_writer.writerow(["civil_district_name", "civil_district_type", "ward_number", "list_number", "turf_number", "door_count"])
+            csvfile_writer.writerows(output_list)
+
+        print(f"Output: {Path(output_filename).resolve()}")
+
+    return
+
+def get_child_pdf(target_dir):
+    pdf_list = []
     for item in target_dir.iterdir():
         if not item.is_file():
             continue
         if item.suffix != ".pdf":
             continue
 
-        map_region_pdf_list.append(item)
+        pdf_list.append(item)
 
-    # print(map_region_pdf_list)
-
-    # for pdf in pdf_list:
-    #     pdf_path = pdf.resolve()
-    #     subprocess.call(['pdftotext', pdf_path])
-
-    output_list = []
-
-    for map_region_pdf in map_region_pdf_list:
-        map_region_doc = pymupdf.open(map_region_pdf.resolve())
-
-        # page_num = 0 # this is weird I don't know the python way to do this
-
-        # I hope we don't have any single ward with more than 3 pages of turfs
-        for page in map_region_doc[:3]:
-            map_region_page = page.get_text()
-            # print(map_region_page)
-
-            map_region_page_lines = map_region_page.splitlines()
-
-            for line_num, line in enumerate(map_region_page_lines):
-                if not is_list_number(line):
-                    continue
-
-                # print(line)
-
-                list_number = line
-                turf_number = map_region_page_lines[line_num + 1]
-                door_count = map_region_page_lines[line_num + 3]
-
-                output_list.append((list_number, turf_number, door_count))
-
-    stdout_writer = csv.writer(sys.stdout)
-    stdout_writer.writerow(["list_number", "turf_number", "door_count"])
-    stdout_writer.writerows(output_list)
-
-    return
-
+    return pdf_list
 
 def is_list_number(line):
     return (
         len(line) == 14 and line[8] == "-" and line[:8].isdigit() and line[9:].isdigit()
     )
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -85,28 +107,33 @@ def main():
     )
     parser.add_argument(
         "dir",
-        nargs="?",
+        nargs="*",
         type=Path,
         default=None,
-        help="Specify a directory containing PDFs to parse. Default: cwd",
+        help="Specify directories containing PDFs to parse. Default: cwd",
     )
 
     parser.add_argument(
         "--dir",
-        nargs="?",
+        nargs="*",
         type=Path,
         default=None,
-        help="Specify a directory containing PDFs to parse. Default: cwd",
+        help="Specify directories containing PDFs to parse. Default: cwd",
         dest="dir_flag",
+    )
+
+    parser.add_argument(
+        "--stdout",
+        action="store_true",
+        help="Output CSV to stdout instead of a file"
     )
 
     args = parser.parse_args()
 
-    target_dir = args.dir or args.dir_flag or Path.cwd()
+    target_dir_list = args.dir or args.dir_flag or [Path.cwd()]
+    is_stdout = args.stdout or False
 
-    turf_pdf_to_csv(target_dir)
-
+    turf_pdf_to_csv(target_dir_list, is_stdout)
 
 if __name__ == "__main__":
-    # turf_pdf_to_csv()
     main()
