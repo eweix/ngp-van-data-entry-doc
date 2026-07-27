@@ -66,12 +66,12 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                     continue
 
                 list_number = line
-                if len(map_region_page_lines) >= line_num + 1:
+                if len(map_region_page_lines) > line_num + 1:
                     turf_number = map_region_page_lines[line_num + 1]
                 else:
                     turf_number = ""
                 
-                if len(map_region_page_lines) >= line_num + 3:
+                if len(map_region_page_lines) > line_num + 3:
                     door_count = map_region_page_lines[line_num + 3]
                 else:
                     door_count = ""
