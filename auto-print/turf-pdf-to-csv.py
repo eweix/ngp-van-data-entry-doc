@@ -62,6 +62,8 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                 else:
                     ward_number = ""
 
+            # Go through the rest of the lines for the
+            # list number, turf number, and door count
             for line_num, line in enumerate(map_region_page_lines):
                 if not is_list_number(line):
                     continue
