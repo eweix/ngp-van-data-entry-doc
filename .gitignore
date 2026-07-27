@@ -1,5 +1,7 @@
 .DS_Store
 **/.DS_Store
 **/*.csv
+**/*.pdf
+auto-print/*.txt
 auto-print/R05B_Portage_Sample/*
 auto-print/R05B_Portage_Sample
