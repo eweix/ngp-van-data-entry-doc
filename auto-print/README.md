@@ -12,16 +12,16 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
 
 # Setup
 1. Install python
-  - Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
-  - Mac: `brew install python`
+    - Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
+    - Mac: `brew install python`
 2. Install pymupdf
-  - Windows: `pip install pymupdf`
-  - Mac: `brew install pymupdf`
+    - Windows: `pip install pymupdf`
+    - Mac: `brew install pymupdf`
 
 # Usage
-1. 
-  - Windows: `py .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
-  - Mac: `python3 .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
+1. Run python script
+    - Windows: `py .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
+    - Mac: `python3 .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
 
 2. Copy/paste to excel/sheets for further parsing
 
