@@ -3,7 +3,7 @@ The turf refreshing process was tedious.
 
 It involved opening 50+ PDFs per regional committee, carefully copying the turf tables from each page, and pasting to Google sheets.
 
-# High-Level Changes
+# High-Level Workflow
 Use a python script on a folder of turf PDFs to output CSV.
 
 The CSV can then be copy/pasted to excel/sheets to fix misnames, identify duplicates, and sort by priority.
@@ -12,19 +12,18 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
 
 # Setup
 1. Install python
-Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
-
-Mac:
+  - Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
+  - Mac:
 ```
 brew install python
 ```
 2. Install pymupdf
-Windows:
+  - Windows:
 ```
 pip install pymupdf
 ```
 
-Mac:
+  - Mac:
 ```
 brew install pymupdf
 ```
