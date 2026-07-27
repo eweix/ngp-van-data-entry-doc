@@ -35,14 +35,18 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
 
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
-                    district_types = ["City", "Town", "Village"]
+                    district_types = {
+                        "City" : "C",
+                        "Town" : "T",
+                        "Village" : "V"
+                    }
                     civil_district = region_name_split[2]
-                    for district_type in district_types:
+                    for district_type_full in district_types.keys():
                         civil_district_lower = civil_district.lower()
-                        district_type_lower = district_type.lower()
-                        if civil_district_lower.endswith(district_type_lower):
-                            civil_district_name = civil_district[:-len(district_type_lower)]
-                            civil_district_type = district_type
+                        district_type_full_lower = district_type_full.lower()
+                        if civil_district_lower.endswith(district_type_full_lower):
+                            civil_district_name = civil_district[:-len(district_type_full_lower)]
+                            civil_district_type = district_types[district_type_full]
                             break
                     else:
                         civil_district_name = civil_district
