@@ -19,7 +19,9 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
   - Mac: `brew install pymupdf`
 
 # Usage
-1. `python .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
+1. 
+  - Windows: `py .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
+  - Mac: `python3 .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
 
 2. Copy/paste to excel/sheets for further parsing
 
