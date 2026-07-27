@@ -49,6 +49,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                             civil_district_type = district_types[district_type_full]
                             break
                     else:
+                        # Just put it in the name column if it's really misnamed
                         civil_district_name = civil_district
                         civil_district_type = ""
 
