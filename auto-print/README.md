@@ -41,7 +41,9 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
     - Use the `Misname` tab to correct any civil district names
         - ex. `StevensPoint` to `Stevens Point` (*not a misname, but I didn't automate adding back whitespace...*)
         - ex. `StevensPt` to `Stevens Point`
-    - Use the `duplicate_finder` column to find duplicates
+    - Use the `duplicate_finder` column to find duplicates. (You should delete one of the duplicates in votebuilder.)
+    - If anything looks really messed up, then you should audit the map region in votebuilder
+        - ex. check that the map region Home District criterion is pointing at the right ward
 3. Add ward priority to the `Prio` tab (*this could be automated...*):
     1. Open your regional committe's Canvass and Turf Tracker
     2. Open the Ward Tracking tab
