@@ -29,9 +29,9 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
 3. Copy/paste CSV to the `format_for_turf_tracker.xlsx` spreadsheet for further parsing
 
 ## Parameters
-- `--dir`: Specify directories containing PDFs to parse. Defaults to current working directory if not specified
+- `--dir`: Specify one or more directories containing PDFs to parse. Defaults to current working directory if not specified
 
-- `--stdout`: Specify this flag to output to stdout instead of to CSV file
+- `--stdout`: Set this flag to write to stdout instead of to a CSV file
 
 # format_for_tuf_tracker.xlsx
 
