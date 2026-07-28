@@ -10,7 +10,8 @@ The CSV can then be copy/pasted to excel/sheets to fix misnames, identify duplic
 
 After cleaning up the list in Excel/Sheets, the final result can be pasted to the Turf Tracking tab.
 
-# Setup
+# turf-pdf-to-csv.py
+## Setup
 1. Install python
     - Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
     - Mac: `brew install python`
@@ -18,14 +19,35 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
     - Windows: `pip install pymupdf`
     - Mac: `brew install pymupdf`
 
-# Usage
+## Usage
 1. Run python script
     - Windows: `py .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
     - Mac: `python3 .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
 
-2. Copy/paste to excel/sheets for further parsing
+2. A csv file will be created named `turf_list_<timestamp>.csv`
 
-# Parameters
+3. Copy/paste CSV to the `format_for_turf_tracker.xlsx` spreadsheet for further parsing
+
+## Parameters
 - `--dir`: Specify directories containing PDFs to parse. Defaults to current working directory if not specified
 
 - `--stdout`: Specify this flag to output to stdout instead of to CSV file
+
+# format_for_tuf_tracker.xlsx
+
+1. Paste the csv output to the first table in the `Fixup` tab
+2. Fix any map region names
+    - Fill out any missing civil district type abbreviations (C, V, T...)
+    - Use the `Misname` tab to correct any civil district names
+        - ex. `StevensPoint` to `Stevens Point` (*not a misname, but I didn't automate adding back whitespace...*)
+        - ex. `StevensPt` to `Stevens Point`
+    - Use the `duplicate_finder` column to find duplicates
+3. Add ward priority to spreadsheet (*this could be automated...*)
+    1. Open your regional committe's Canvass and Turf Tracker
+    2. Open the Ward Tracking tab
+    3. Copy the priority and ward name column
+    4. Paste to the `Prio` tab
+4. You now have the final, unsorted result in the 3rd table on the `Fixup` tab
+5. Copy/paste the unsorted table to the Sort tab and sort
+7. Copy/paste the final, sorted result to the GOTV Turf Tracking Tab
+8. (Optional) Fill out the # of Turf Packets on the Ward Tracking tab using the `Prio` tab's `turf_count` column
