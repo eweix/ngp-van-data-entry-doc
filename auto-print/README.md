@@ -51,4 +51,4 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
     - If there are any missing priorities still, go back to step #2
 5. Copy/paste the unsorted table to the Sort tab and sort
 7. Copy/paste the final, sorted result to the GOTV Turf Tracking Tab
-8. (Optional) Fill out the # of Turf Packets on the Ward Tracking tab using the `Prio` tab's `turf_count` column
+8. (Optional) Use the `Prio` tab's `turf_count` column to fill out the `# of Turf Packets` on the `Ward Tracking` tab of the Canvass and Turf Tracker
