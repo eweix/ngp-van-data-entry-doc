@@ -12,8 +12,8 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
 
 # turf-pdf-to-csv.py
 ## Setup
-1. Install python
-    - Windows: Download installer from [https://www.python.org/downloads/](https://www.python.org/downloads/)
+1. Install python 3.14 or later (*I think I'm using something from 3.9, but I have 3.14 installed*)
+    - Windows: Download python 3.14 or later from [https://www.python.org/downloads/](https://www.python.org/downloads/)
     - Mac: `brew install python`
 2. Install pymupdf
     - Windows: `pip install pymupdf`
