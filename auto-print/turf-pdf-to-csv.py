@@ -35,7 +35,10 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                     district_types = {
                         "City" : "C",
                         "Town" : "T",
-                        "Village" : "V"
+                        "Village" : "V",
+                        "C" : "C",
+                        "T" : "T",
+                        "V" : "V",
                     }
                     civil_district = region_name_split[2]
                     for district_type_full in district_types.keys():
