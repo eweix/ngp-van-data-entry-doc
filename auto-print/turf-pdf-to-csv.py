@@ -1,5 +1,11 @@
 from html import parser
 import re
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "pymupdf>=1.28.0",
+# ]
+# ///
 import sys
 from pathlib import Path
 import pymupdf
