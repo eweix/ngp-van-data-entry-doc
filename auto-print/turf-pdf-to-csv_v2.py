@@ -1,6 +1,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
+#     "ezsheets>=2026.4.28",
 #     "pypdf>=6.14.2",
 #     "pyperclip>=1.11.0",
 # ]
@@ -12,6 +13,7 @@ import pyperclip
 import csv
 import time
 
+import ezsheets
 from pypdf import PdfReader
 from argparse import ArgumentParser
 from pathlib import Path
@@ -75,8 +77,12 @@ def extract_data(
     return data
 
 
-def update_sheet(url):
+def update_sheet(url, data):
     """Update google sheet input"""
+    logging.debug(f"Spreadsheet url: {url}")
+    ss = ezsheets.Spreadsheet(url)
+    sheet = ss.Sheet(f"turf_list_{TIMESTAMP}.csv")
+    sheet.updateRows(data)
     return
 
 
@@ -91,6 +97,12 @@ def _parse_args():
         help="Input turf pdf(s).",
     )
     parser.add_argument(
+        "-r",
+        "--remote",
+        type=str,
+        default=None,
+        help="URL for google spreadsheet to update",
+    )
         "-o",
         "--output",
         type=Path,
@@ -133,6 +145,7 @@ def _parse_args():
 
     logging.basicConfig(level=level)
     logging.getLogger("pypdf").setLevel(logging.ERROR)
+    logging.getLogger("ezsheets").setLevel(logging.ERROR)
 
     # check if stdin is interactive
     # allows users to pipe input into the script
@@ -188,6 +201,8 @@ def main():
             csv.writer(output).writerows(data)
     if args.copy:
         pyperclip.copy(data)
+    if args.remote:
+        update_sheet(args.remote, data)
 
 
 if __name__ == "__main__":
