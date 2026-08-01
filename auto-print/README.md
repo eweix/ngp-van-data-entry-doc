@@ -19,6 +19,15 @@ After cleaning up the list in Excel/Sheets, the final result can be pasted to th
     - Windows: `pip install pymupdf`
     - Mac: `brew install pymupdf`
 
+Alternatively, installation and usage can be managed using [uv][uv]. The script
+works with python version 3.9 or later.
+
+```sh
+uv run turf-pdf-to-csv.py --dir <path to turf PDF folder>
+```
+
+[uv]: https://github.com/astral-sh/uv
+
 ## Usage
 1. Run python script
     - Windows: `py .\turf-pdf-to-csv.py --dir <path to turf PDF folder>`
