@@ -1,17 +1,17 @@
-from html import parser
-import re
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
 #     "pymupdf>=1.28.0",
 # ]
 # ///
+import re
 import sys
 from pathlib import Path
 import pymupdf
 import csv
 import argparse
 import time
+
 
 def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rename_csv):
     # Setup
@@ -25,7 +25,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
     district_rename_dict = get_csv_dict(district_rename_csv)
     region_rename_dict = get_csv_dict(region_rename_csv)
     print(region_rename_dict)
-    
+
     # Parse first couple of pages of map region PDFs
     output_list = []
     for map_region_pdf in map_region_pdf_list:
@@ -40,7 +40,9 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
             if (page_num == 0) and map_region_page_lines:
                 # Get the map region name from first page
                 turf_packet_summary_line = map_region_page_lines[0]
-                map_region_name_orig = turf_packet_summary_line[len("Turf Packet Summary - "):]
+                map_region_name_orig = turf_packet_summary_line[
+                    len("Turf Packet Summary - ") :
+                ]
                 if map_region_name_orig == "":
                     break
 
@@ -52,31 +54,38 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
                     map_region_name_raw = map_region_name_orig
 
                 # Use regex for region names misnamed with multiple underscores
-                
-                region_name_split = re.split(r'_+', map_region_name_raw)
+
+                region_name_split = re.split(r"_+", map_region_name_raw)
 
                 # Get the civil_district_name + type, like Madison + City
+
+                region_name_split = map_region_name_raw.split("_")
+
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
                     district_types = {
-                        "City" : "C",
-                        "Town" : "T",
-                        "Village" : "V",
-                        "C" : "C",
-                        "T" : "T",
-                        "V" : "V",
-                        "Vge" : "V",
+                        "City": "C",
+                        "Town": "T",
+                        "Village": "V",
+                        "C": "C",
+                        "T": "T",
+                        "V": "V",
+                        "Vge": "V",
                     }
                     civil_district = region_name_split[2]
                     for district_type_full in district_types.keys():
                         civil_district_lower = civil_district.lower()
                         district_type_full_lower = district_type_full.lower()
                         if civil_district_lower.endswith(district_type_full_lower):
-                            civil_district_name = civil_district[:-len(district_type_full_lower)]
+                            civil_district_name = civil_district[
+                                : -len(district_type_full_lower)
+                            ]
 
                             # Rename civil_district_name values that are slightly off (ex. StevensPoint, StevensPt --> Stevens Point)
                             if civil_district_name in district_rename_dict:
-                                civil_district_name = district_rename_dict[civil_district_name]
+                                civil_district_name = district_rename_dict[
+                                    civil_district_name
+                                ]
                             civil_district_type = district_types[district_type_full]
                             break
                     else:
@@ -105,50 +114,61 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
                     turf_number = map_region_page_lines[line_num + 1]
                 else:
                     turf_number = ""
-                
+
                 if len(map_region_page_lines) > line_num + 3:
                     door_count = map_region_page_lines[line_num + 3]
                 else:
                     door_count = ""
 
-                output_list.append((map_region_name_orig,
-                                    civil_district_name, 
-                                    civil_district_type,
-                                    ward_number,
-                                    list_number, 
-                                    turf_number,
-                                    door_count))
+                output_list.append(
+                    (
+                        map_region_name_orig,
+                        civil_district_name,
+                        civil_district_type,
+                        ward_number,
+                        list_number,
+                        turf_number,
+                        door_count,
+                    )
+                )
 
     # Write output
     timestamp = time.strftime(("%Y%m%d-%H%M-%S"))
     output_filename = "turf_list_" + timestamp + ".csv"
     if is_stdout:
         stdout_writer = csv.writer(sys.stdout)
-        stdout_writer.writerow([
-            "region_name_raw", 
-            "civil_district_name", 
-            "civil_district_type",
-            "ward_number", 
-            "list_number", 
-            "turf_number", 
-            "door_count"])
-        stdout_writer.writerows(output_list)
-    else:
-        with open(output_filename, newline = "", mode="w") as csvfile:
-            csvfile_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
-            csvfile_writer.writerow([
-                "region_name_raw", 
+        stdout_writer.writerow(
+            [
+                "region_name_raw",
                 "civil_district_name",
                 "civil_district_type",
                 "ward_number",
                 "list_number",
                 "turf_number",
-                "door_count"])
+                "door_count",
+            ]
+        )
+        stdout_writer.writerows(output_list)
+    else:
+        with open(output_filename, newline="", mode="w") as csvfile:
+            csvfile_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONNUMERIC)
+            csvfile_writer.writerow(
+                [
+                    "region_name_raw",
+                    "civil_district_name",
+                    "civil_district_type",
+                    "ward_number",
+                    "list_number",
+                    "turf_number",
+                    "door_count",
+                ]
+            )
             csvfile_writer.writerows(output_list)
 
         print(f"Output: {Path(output_filename).resolve()}")
 
     return
+
 
 def get_csv_dict(csv_filepath):
     csv_dict = {}
@@ -157,7 +177,7 @@ def get_csv_dict(csv_filepath):
     if not csv_filepath.exists():
         return csv_dict
 
-    with open(csv_filepath, newline='') as csvfile:
+    with open(csv_filepath, newline="") as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             if len(row) == 2:
@@ -165,6 +185,7 @@ def get_csv_dict(csv_filepath):
                 csv_dict[key] = val
 
     return csv_dict
+
 
 def get_child_pdf(target_dir):
     pdf_list = []
@@ -178,10 +199,12 @@ def get_child_pdf(target_dir):
 
     return pdf_list
 
+
 def is_list_number(line):
     return (
         len(line) == 14 and line[8] == "-" and line[:8].isdigit() and line[9:].isdigit()
     )
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -205,16 +228,14 @@ def main():
     )
 
     parser.add_argument(
-        "--stdout",
-        action="store_true",
-        help="Output CSV to stdout instead of a file"
+        "--stdout", action="store_true", help="Output CSV to stdout instead of a file"
     )
 
     parser.add_argument(
         "--district-rename",
         type=Path,
         default=None,
-        help="To rename civil districts, specify a CSV file with contents in the format of: old_name,new_name. For example: \"StevensPt\",\"Stevens Point\"",
+        help='To rename civil districts, specify a CSV file with contents in the format of: old_name,new_name. For example: "StevensPt","Stevens Point"',
     )
 
     parser.add_argument(
@@ -232,6 +253,7 @@ def main():
     region_rename_csv = args.region_rename
 
     turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rename_csv)
+
 
 if __name__ == "__main__":
     main()
