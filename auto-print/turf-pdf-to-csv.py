@@ -20,7 +20,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
     for target_dir in target_dir_list:
         if not target_dir.exists():
             continue
-        map_region_pdf_list.extend(get_child_pdf(target_dir))
+        map_region_pdf_list.extend(target_dir.glob("*.pdf"))
     # Get rename dictionaries
     district_rename_dict = get_csv_dict(district_rename_csv)
     region_rename_dict = get_csv_dict(region_rename_csv)
@@ -54,12 +54,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rena
                     map_region_name_raw = map_region_name_orig
 
                 # Use regex for region names misnamed with multiple underscores
-
                 region_name_split = re.split(r"_+", map_region_name_raw)
-
-                # Get the civil_district_name + type, like Madison + City
-
-                region_name_split = map_region_name_raw.split("_")
 
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
@@ -185,19 +180,6 @@ def get_csv_dict(csv_filepath):
                 csv_dict[key] = val
 
     return csv_dict
-
-
-def get_child_pdf(target_dir):
-    pdf_list = []
-    for item in target_dir.iterdir():
-        if not item.is_file():
-            continue
-        if item.suffix != ".pdf":
-            continue
-
-        pdf_list.append(item)
-
-    return pdf_list
 
 
 def is_list_number(line):
