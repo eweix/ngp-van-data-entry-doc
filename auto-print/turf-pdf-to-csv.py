@@ -214,23 +214,14 @@ def main():
         "dir",
         nargs="*",
         type=Path,
-        default=None,
+        default=[Path.cwd()],
         help="Specify one or more directories containing PDFs to parse. Default: cwd",
     )
-
     parser.add_argument(
-        "--dir",
-        nargs="*",
-        type=Path,
-        default=None,
-        help="Specify one or more directories containing PDFs to parse. Default: cwd",
-        dest="dir_flag",
+        "--stdout",
+        action="store_true",
+        help="Output CSV to stdout instead of a file",
     )
-
-    parser.add_argument(
-        "--stdout", action="store_true", help="Output CSV to stdout instead of a file"
-    )
-
     parser.add_argument(
         "--district-rename",
         type=Path,
@@ -247,12 +238,10 @@ def main():
 
     args = parser.parse_args()
 
-    target_dir_list = args.dir or args.dir_flag or [Path.cwd()]
-    is_stdout = args.stdout or False
     district_rename_csv = args.district_rename
     region_rename_csv = args.region_rename
 
-    turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rename_csv)
+    turf_pdf_to_csv(args.dir, args.stdout, district_rename_csv, region_rename_csv)
 
 
 if __name__ == "__main__":
