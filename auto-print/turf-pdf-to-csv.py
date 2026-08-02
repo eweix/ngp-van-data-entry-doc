@@ -1,3 +1,4 @@
+import re
 import sys
 from pathlib import Path
 import pymupdf
@@ -27,8 +28,9 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                 map_region_name_raw = turf_packet_summary_line[len("Turf Packet Summary - "):]
                 if map_region_name_raw == "":
                     break
-                
-                region_name_split = map_region_name_raw.split("_")
+
+                # Use regex for region names misnamed with multiple underscores
+                region_name_split = re.split(r'_+', map_region_name_raw)
 
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
