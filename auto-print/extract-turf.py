@@ -2,6 +2,7 @@
 # requires-python = ">=3.13"
 # dependencies = [
 #     "gspread>=6.2.1",
+#     "gspread-formatting>=1.2.1",
 #     "pypdf>=6.14.2",
 #     "pyperclip>=1.11.0",
 # ]
@@ -119,7 +120,7 @@ def post_process(data, district_rename_csv, priorities_csv):
             duplicates.add(r)
         else:
             seen.add(r)
-    is_dup = [True if r in duplicates else None for r in dup_finder]
+    is_dup = ["DUPLICATE" if r in duplicates else None for r in dup_finder]
     new_cols = [
         ["misname_rename"] + canonical,
         ["priority"]
@@ -142,16 +143,40 @@ def post_process(data, district_rename_csv, priorities_csv):
 def update_sheet(url, data):
     """Update google sheet input"""
     import gspread  # avoid unnecessary authentication
+    from gspread_formatting import (
+        ConditionalFormatRule,
+        GridRange,
+        cellFormat,
+        get_conditional_format_rules,
+        BooleanRule,
+        BooleanCondition,
+        Color,
+    )
 
     logger.debug(f"spreadsheet url: {url}")
     logger.debug("checking authorization")
     sh = gspread.oauth().open_by_url(url)
+    logger.debug("uploading spreadsheet")
     w = sh.add_worksheet(
         title=f"turf_list_{TIMESTAMP}.csv",
         rows=len(data),
         cols=len(data[0]),
     )
     w.update(range_name="A1", values=data)
+    logger.debug("uploaded spreadsheet")
+    logger.debug("highlighting duplicates...")
+    rules = get_conditional_format_rules(w)
+    rules.append(
+        ConditionalFormatRule(
+            ranges=[GridRange.from_a1_range("A1:Z1000", w)],
+            booleanRule=BooleanRule(
+                condition=BooleanCondition("CUSTOM_FORMULA", ['=$O1="DUPLICATE"']),
+                format=cellFormat(backgroundColor=Color(1, 1, 0)),
+            ),
+        )
+    )
+    rules.save()
+    logger.info("formatting complete!")
     return
 
 
