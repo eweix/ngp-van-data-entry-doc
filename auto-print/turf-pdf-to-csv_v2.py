@@ -18,11 +18,15 @@ import ezsheets
 from pypdf import PdfReader
 from argparse import ArgumentParser
 from pathlib import Path
-from difflib import get_close_matches
 
 logger = logging.getLogger(__name__)
 
 TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
+MISNAMES = {
+    "StevensPoint": "Stevens Point",
+    "StevensPt": "Stevens Point",
+    "ParkRidge": "Park Ridge",
+}
 
 
 def extract_data(
@@ -87,12 +91,7 @@ def extract_data(
 
 def post_process(data):
     """Canonize names and apply post-processing for duplicate detection"""
-    canonical = [
-        get_close_matches(r[1], DISTRICT_NAMES, n=1, cutoff=0.6)[0]
-        if get_close_matches(r[1], DISTRICT_NAMES, n=1, cutoff=0.6)[0]
-        else r[1]
-        for r in data[1:]
-    ]
+    canonical = [MISNAMES[r[1]] if r[1] in MISNAMES.keys() else r[1] for r in data[1:]]
     ward_turf = [f"{canonical[i]} - {r[2]} - {r[3]}" for i, r in enumerate(data[1:])]
     dup_finder = [f"{ward_turf[i]} - {r[5]}" for i, r in enumerate(data[1:])]
     seen = set()
