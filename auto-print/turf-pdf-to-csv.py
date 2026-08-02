@@ -1,3 +1,4 @@
+from html import parser
 import re
 import sys
 from pathlib import Path
@@ -6,11 +7,19 @@ import csv
 import argparse
 import time
 
-def turf_pdf_to_csv(target_dir_list, is_stdout):
+def turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rename_csv):
+    # Setup
+    # Get PDFs in directories (non-recursive)
     map_region_pdf_list = []
     for target_dir in target_dir_list:
+        if not target_dir.exists():
+            continue
         map_region_pdf_list.extend(get_child_pdf(target_dir))
-
+    # Get rename dictionaries
+    district_rename_dict = get_csv_dict(district_rename_csv)
+    region_rename_dict = get_csv_dict(region_rename_csv)
+    print(region_rename_dict)
+    
     # Parse first couple of pages of map region PDFs
     output_list = []
     for map_region_pdf in map_region_pdf_list:
@@ -25,11 +34,19 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
             if (page_num == 0) and map_region_page_lines:
                 # Get the map region name from first page
                 turf_packet_summary_line = map_region_page_lines[0]
-                map_region_name_raw = turf_packet_summary_line[len("Turf Packet Summary - "):]
-                if map_region_name_raw == "":
+                map_region_name_orig = turf_packet_summary_line[len("Turf Packet Summary - "):]
+                if map_region_name_orig == "":
                     break
 
+                # Replace the raw region name for values that are known to be bad
+                # These are mainly names that are missing pieces entirely, like the ward number or civil district type
+                if map_region_name_orig in region_rename_dict:
+                    map_region_name_raw = region_rename_dict[map_region_name_orig]
+                else:
+                    map_region_name_raw = map_region_name_orig
+
                 # Use regex for region names misnamed with multiple underscores
+                
                 region_name_split = re.split(r'_+', map_region_name_raw)
 
                 # Get the civil_district_name + type, like Madison + City
@@ -50,6 +67,10 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                         district_type_full_lower = district_type_full.lower()
                         if civil_district_lower.endswith(district_type_full_lower):
                             civil_district_name = civil_district[:-len(district_type_full_lower)]
+
+                            # Rename civil_district_name values that are slightly off (ex. StevensPoint, StevensPt --> Stevens Point)
+                            if civil_district_name in district_rename_dict:
+                                civil_district_name = district_rename_dict[civil_district_name]
                             civil_district_type = district_types[district_type_full]
                             break
                     else:
@@ -84,7 +105,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                 else:
                     door_count = ""
 
-                output_list.append((map_region_name_raw,
+                output_list.append((map_region_name_orig,
                                     civil_district_name, 
                                     civil_district_type,
                                     ward_number,
@@ -123,6 +144,22 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
 
     return
 
+def get_csv_dict(csv_filepath):
+    csv_dict = {}
+    if not csv_filepath:
+        return csv_dict
+    if not csv_filepath.exists():
+        return csv_dict
+
+    with open(csv_filepath, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if len(row) == 2:
+                key, val = row
+                csv_dict[key] = val
+
+    return csv_dict
+
 def get_child_pdf(target_dir):
     pdf_list = []
     for item in target_dir.iterdir():
@@ -149,7 +186,7 @@ def main():
         nargs="*",
         type=Path,
         default=None,
-        help="Specify directories containing PDFs to parse. Default: cwd",
+        help="Specify one or more directories containing PDFs to parse. Default: cwd",
     )
 
     parser.add_argument(
@@ -157,7 +194,7 @@ def main():
         nargs="*",
         type=Path,
         default=None,
-        help="Specify directories containing PDFs to parse. Default: cwd",
+        help="Specify one or more directories containing PDFs to parse. Default: cwd",
         dest="dir_flag",
     )
 
@@ -167,12 +204,28 @@ def main():
         help="Output CSV to stdout instead of a file"
     )
 
+    parser.add_argument(
+        "--district-rename",
+        type=Path,
+        default=None,
+        help="To rename civil districts, specify a CSV file with contents in the format of: old_name,new_name. For example: \"StevensPt\",\"Stevens Point\"",
+    )
+
+    parser.add_argument(
+        "--region-rename",
+        type=Path,
+        default=None,
+        help="To rename the entire region, specify a CSV file with contents in the format of: old_name,new_name. This is useful when the name is missing pieces, like ward number or civil district type",
+    )
+
     args = parser.parse_args()
 
     target_dir_list = args.dir or args.dir_flag or [Path.cwd()]
     is_stdout = args.stdout or False
+    district_rename_csv = args.district_rename
+    region_rename_csv = args.region_rename
 
-    turf_pdf_to_csv(target_dir_list, is_stdout)
+    turf_pdf_to_csv(target_dir_list, is_stdout, district_rename_csv, region_rename_csv)
 
 if __name__ == "__main__":
     main()

@@ -7,3 +7,5 @@ auto-print/R05B_Portage_Sample/*
 auto-print/R05B_Portage_Sample
 ~*
 **/~*
+!*/district_rename_csv.csv
+!*/region_rename_csv.csv
