@@ -53,7 +53,7 @@ def extract_data(
         r"(?P<code>\d+-\d+)\s*(?P<turf>Turf \d+)\s*\d+\s*(?P<num_doors>\d+)"
     )
     pr = re.compile(
-        r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|V|Town|T])?_(\d+)_.*)"
+        r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|Vge|V|Town|T])?_(\d+)_.*)"
     )
     logger.debug(f"{p.name}: extracting text from all pages")
     data = list()
@@ -84,6 +84,7 @@ def extract_data(
                 "C": "C",
                 "T": "T",
                 "V": "V",
+                "Vge": "V",
             }[meta[2]]
             meta[3] = meta[3].zfill(4)  # left pad ward to 4 digits
         data.extend(meta + list(m.groups()) for m in tr.finditer(text))
