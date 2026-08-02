@@ -17,6 +17,7 @@ import ezsheets
 from pypdf import PdfReader
 from argparse import ArgumentParser
 from pathlib import Path
+from difflib import get_close_matches
 
 TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
 
@@ -75,6 +76,36 @@ def extract_data(
             f"{p.name} : page {page} - {sum(1 for _ in tr.finditer(text))} matches"
         )
     return data
+
+
+def post_process(data):
+    """Canonize names and apply post-processing for duplicate detection"""
+    canonical = [
+        get_close_matches(r[1], DISTRICT_NAMES, n=1, cutoff=0.6)[0] for r in data[1:]
+    ]
+    ward_turf = [f"{canonical[i]} - {r[2]} - {r[3]}" for i, r in enumerate(data[1:])]
+    dup_finder = [f"{ward_turf[i]} - {r[5]}" for i, r in enumerate(data[1:])]
+    seen = set()
+    duplicates = set()
+    for r in dup_finder:
+        if r in seen:
+            duplicates.add(r)
+        else:
+            seen.add(r)
+    is_dup = [True if r in duplicates else None for r in dup_finder]
+    new_cols = [
+        ["misname_rename"] + canonical,
+        ["priority"] + [None for r in data[1:]],
+        ["ward_from_turf"] + ward_turf,
+        ["list_number"] + [r[5] for r in data[1:]],
+        ["turf_number"] + [r[5] for r in data[1:]],
+        ["door_count"] + [r[6] for r in data[1:]],
+        ["duplicate_finder"] + dup_finder,
+        ["is_duplicate"] + is_dup,
+    ]
+    assert all(len(c) == len(data) for c in new_cols), "Column lengths must match"
+    # transpose body to append new columns, then transpose back to rows to re-apply header
+    return list(zip(*(list(zip(*data)) + new_cols)))
 
 
 def update_sheet(url, data):
@@ -194,6 +225,7 @@ def main():
     ]
     for f in files:
         data.extend(extract_data(f, pagelim=args.pagelim))
+    data = post_process(data)
     if args.stdout:
         csv.writer(sys.stdout).writerows(data)
     else:
