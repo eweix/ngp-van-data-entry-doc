@@ -20,6 +20,8 @@ from argparse import ArgumentParser
 from pathlib import Path
 from difflib import get_close_matches
 
+logger = logging.getLogger(__name__)
+
 TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
 
 
@@ -53,7 +55,7 @@ def extract_data(
     pr = re.compile(
         r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|V|Town|T])?_(\d+)_.*)"
     )
-    logging.debug(f"{p.name} : extracting text from all pages")
+    logger.debug(f"{p.name}: extracting text from all pages")
     data = list()
     if pagelim == -1:
         pages = enumerate(PdfReader(p).pages)
@@ -65,7 +67,7 @@ def extract_data(
         if i == 0:
             meta = list(next(pr.finditer(text)).groups())
             assert len(meta) == 4
-            logging.debug(f"{p.name} : metadata is {meta}")
+            logger.debug(f"{p.name}: metadata is {meta}")
             # normalize district type
             meta[2] = {
                 "City": "C",
@@ -77,8 +79,8 @@ def extract_data(
             }[meta[2]]
             meta[3] = meta[3].zfill(4)  # left pad ward to 4 digits
         data.extend(meta + list(m.groups()) for m in tr.finditer(text))
-        logging.debug(
-            f"{p.name} : page {page} - {sum(1 for _ in tr.finditer(text))} matches"
+        logger.debug(
+            f"{p.name}: page {i} - {sum(1 for _ in tr.finditer(text))} matches"
         )
     return data
 
@@ -115,7 +117,7 @@ def post_process(data):
 
 def update_sheet(url, data):
     """Update google sheet input"""
-    logging.debug(f"Spreadsheet url: {url}")
+    logger.debug(f"Spreadsheet url: {url}")
     ss = ezsheets.Spreadsheet(url)
     sheet = ss.Sheet(f"turf_list_{TIMESTAMP}.csv")
     sheet.updateRows(data)
@@ -166,21 +168,22 @@ def main():
         "-v",
         "--verbose",
         action="count",
-        help="Enable verbose output for debugging. Cumulative.",
+        default=0,
+        help="Increase verbosity (e.g. -v, -vv).",
     )
     args = parser.parse_args()
 
     if args.verbose == 0:
         level = logging.WARNING
-        logging.info("Running script...")
+        logger.info("Running script...")
     elif args.verbose == 1:
         level = logging.INFO
-        logging.info("Starting script in verbose mode...")
+        logger.info("Starting script in verbose mode...")
     else:
         level = logging.DEBUG
-        logging.info("Starting script in debug mode...")
+        logger.info("Starting script in debug mode...")
 
-    logging.basicConfig(level=level)
+    logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
     logging.getLogger("pypdf").setLevel(logging.ERROR)
     logging.getLogger("ezsheets").setLevel(logging.ERROR)
 
@@ -203,16 +206,17 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    logging.info(f"Got {len(files)} input files")
-    for file in files:
-        logging.debug(f"\t{str(file)}")
+    logger.info(
+        f"running script with {len(files)} input {'file' if len(files) == 1 else 'files'}"
+    )
+    logger.debug(f"input filenames:\n{'\n'.join('\t' + str(f) for f in files)}")
 
     if not args.stdout:
-        logging.debug(f"output: {str(args.output)}")
+        logger.debug(f"output: {str(args.output)}")
     else:
-        logging.debug("output: stdout")
+        logger.debug("output: stdout")
 
-    logging.info("exporting turf data...")
+    logger.info("exporting turf data...")
     data = [
         [
             "region_name_raw",
@@ -226,6 +230,7 @@ def main():
     ]
     for f in files:
         data.extend(extract_data(f, pagelim=args.pagelim))
+    logger.info(f"found {len(data[1:])} turfs to process")
     data = post_process(data)
     if args.stdout:
         csv.writer(sys.stdout).writerows(data)
