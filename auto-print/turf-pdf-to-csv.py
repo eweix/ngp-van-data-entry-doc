@@ -32,6 +32,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                 # Use regex for region names misnamed with multiple underscores
                 region_name_split = re.split(r'_+', map_region_name_raw)
 
+                # Get the civil_district_name + type, like Madison + City
                 # Protect against poorly named map regions
                 if len(region_name_split) > 2:
                     district_types = {
@@ -60,6 +61,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                     civil_district_name = ""
                     civil_district_type = ""
 
+                # Get ward number
                 if len(region_name_split) > 3:
                     ward_number = region_name_split[3].zfill(4)
                 else:
