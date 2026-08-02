@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "ezsheets>=2026.4.28",
+#     "gspread>=6.2.1",
 #     "pypdf>=6.14.2",
 #     "pyperclip>=1.11.0",
 # ]
@@ -13,7 +13,6 @@ import csv
 import time
 
 import pyperclip
-import ezsheets
 
 from pypdf import PdfReader
 from argparse import ArgumentParser
@@ -123,10 +122,17 @@ def post_process(data):
 
 def update_sheet(url, data):
     """Update google sheet input"""
-    logger.debug(f"Spreadsheet url: {url}")
-    ss = ezsheets.Spreadsheet(url)
-    sheet = ss.Sheet(f"turf_list_{TIMESTAMP}.csv")
-    sheet.updateRows(data)
+    import gspread  # avoid unnecessary authentication
+
+    logger.debug(f"spreadsheet url: {url}")
+    logger.debug("checking authorization")
+    sh = gspread.oauth().open_by_url(url)
+    w = sh.add_worksheet(
+        title=f"turf_list_{TIMESTAMP}.csv",
+        rows=len(data),
+        cols=len(data[0]),
+    )
+    w.update(range_name="A1", values=data)
     return
 
 
