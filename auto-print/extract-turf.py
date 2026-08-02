@@ -26,6 +26,7 @@ TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
 
 def extract_data(
     p: Path,
+    region_rename_csv: Path,
     pagelim=3,
 ):
     """Extract turf data from the pdf
@@ -56,6 +57,12 @@ def extract_data(
     )
     logger.debug(f"{p.name}: extracting text from all pages")
     data = list()
+    if region_rename_csv:
+        logger.info(f"using region name overrides from {region_rename_csv.name}")
+        with open(region_rename_csv, mode="r") as f:
+            regions = {r[0]: r[1] for r in islice(csv.reader(f), 1, None) if r}
+    else:
+        regions = None
     if pagelim == -1:
         pages = enumerate(PdfReader(p).pages)
     else:
@@ -65,6 +72,8 @@ def extract_data(
         # metadata exists only on first page
         if i == 0:
             meta = list(next(pr.finditer(text)).groups())
+            if regions and meta[0] in regions.keys():
+                meta = list(next(pr.finditer(regions[meta[0]])).groups())
             assert len(meta) == 4
             logger.debug(f"{p.name}: metadata is {meta}")
             # normalize district type
@@ -84,13 +93,22 @@ def extract_data(
     return data
 
 
-def post_process(data):
+def post_process(data, district_rename_csv, priorities_csv):
     """Canonize names and apply post-processing for duplicate detection"""
-    with open(Path("misnames.csv"), mode="r") as f:
-        misnames = {r[0]: r[1] for r in islice(csv.reader(f), 1, None) if r}
-    with open(Path("prios.csv"), mode="r") as f:
-        prios = {r[1]: r[0] for r in islice(csv.reader(f), 1, None) if r}
-    canonical = [misnames[r[1]] if r[1] in misnames.keys() else r[1] for r in data[1:]]
+    if district_rename_csv:
+        with open(district_rename_csv, mode="r") as f:
+            misnames = {r[0]: r[1] for r in islice(csv.reader(f), 1, None) if r}
+    else:
+        misnames = None
+    if priorities_csv:
+        with open(priorities_csv, mode="r") as f:
+            prios = {r[0]: r[1] for r in islice(csv.reader(f), 1, None) if r}
+    else:
+        prios = None
+    canonical = [
+        misnames[r[1]] if misnames and r[1] in misnames.keys() else r[1]
+        for r in data[1:]
+    ]
     ward_turf = [f"{canonical[i]} - {r[2]} - {r[3]}" for i, r in enumerate(data[1:])]
     dup_finder = [f"{ward_turf[i]} - {r[5]}" for i, r in enumerate(data[1:])]
     seen = set()
@@ -105,7 +123,7 @@ def post_process(data):
         ["misname_rename"] + canonical,
         ["priority"]
         + [
-            prios[ward_turf[i]] if ward_turf[i] in prios.keys() else None
+            prios[ward_turf[i]] if prios and ward_turf[i] in prios.keys() else None
             for i, r in enumerate(data[1:])
         ],
         ["ward_from_turf"] + ward_turf,
@@ -177,6 +195,24 @@ def main():
         help="Process up to this page in the pdf.\nDefault: 3",
     )
     parser.add_argument(
+        "--district-rename",
+        type=Path,
+        default=None,
+        help='To rename civil districts, specify a CSV file with contents in the format of: old_name,new_name. For example: "StevensPt","Stevens Point"',
+    )
+    parser.add_argument(
+        "--region-rename",
+        type=Path,
+        default=None,
+        help="To rename the entire region, specify a CSV file with contents in the format of: old_name,new_name. This is useful when the name is missing pieces, like ward number or civil district type",
+    )
+    parser.add_argument(
+        "--priorities",
+        type=Path,
+        default=None,
+        help="To assign priorities to civil districts, specify a CSV file ith contents in the format of: region,priority. This is useful for automatically sorting by canvassing priority.",
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="count",
@@ -241,9 +277,9 @@ def main():
         ]
     ]
     for f in files:
-        data.extend(extract_data(f, pagelim=args.pagelim))
+        data.extend(extract_data(f, args.region_rename, pagelim=args.pagelim))
     logger.info(f"found {len(data[1:])} turfs to process")
-    data = post_process(data)
+    data = post_process(data, args.district_rename, args.priorities)
     if args.stdout:
         csv.writer(sys.stdout).writerows(data)
     else:
