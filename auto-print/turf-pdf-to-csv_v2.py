@@ -18,15 +18,11 @@ import ezsheets
 from pypdf import PdfReader
 from argparse import ArgumentParser
 from pathlib import Path
+from itertools import islice
 
 logger = logging.getLogger(__name__)
 
 TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
-MISNAMES = {
-    "StevensPoint": "Stevens Point",
-    "StevensPt": "Stevens Point",
-    "ParkRidge": "Park Ridge",
-}
 
 
 def extract_data(
@@ -91,7 +87,11 @@ def extract_data(
 
 def post_process(data):
     """Canonize names and apply post-processing for duplicate detection"""
-    canonical = [MISNAMES[r[1]] if r[1] in MISNAMES.keys() else r[1] for r in data[1:]]
+    with open(Path("misnames.csv"), mode="r") as f:
+        misnames = {r[0]: r[1] for r in islice(csv.reader(f), 1, None) if r}
+    with open(Path("prios.csv"), mode="r") as f:
+        prios = {r[1]: r[0] for r in islice(csv.reader(f), 1, None) if r}
+    canonical = [misnames[r[1]] if r[1] in misnames.keys() else r[1] for r in data[1:]]
     ward_turf = [f"{canonical[i]} - {r[2]} - {r[3]}" for i, r in enumerate(data[1:])]
     dup_finder = [f"{ward_turf[i]} - {r[5]}" for i, r in enumerate(data[1:])]
     seen = set()
@@ -104,7 +104,11 @@ def post_process(data):
     is_dup = [True if r in duplicates else None for r in dup_finder]
     new_cols = [
         ["misname_rename"] + canonical,
-        ["priority"] + [None for r in data[1:]],
+        ["priority"]
+        + [
+            prios[ward_turf[i]] if ward_turf[i] in prios.keys() else None
+            for i, r in enumerate(data[1:])
+        ],
         ["ward_from_turf"] + ward_turf,
         ["list_number"] + [r[5] for r in data[1:]],
         ["turf_number"] + [r[5] for r in data[1:]],
