@@ -3,6 +3,56 @@ The turf refreshing process was tedious.
 
 It involved opening 50+ PDFs per regional committee, carefully copying the turf tables from each page, and pasting to Google sheets.
 
+# extract-turf.py
+
+Updated version of the turf-pdf-to-csv.py script.
+Takes a folder of turf PDFs and converts them both to output CSV and optionally
+uploads them as new worksheets in a specified google spreadsheet.
+
+## Setup
+1. Install [uv][uv].
+2. For google sheets integration, configure a [google developer account and
+   project][google-api]. More detailed instructions can be found in the [gspread
+   documentation][gs-oauth2]
+
+[uv]: https://github.com/astral-sh/uv
+[google-api]: 
+[gs-oath2]: https://docs.gspread.org/en/latest/oauth2.html
+
+## Usage
+
+Calling `extract-turf.py` without any arguments will show the help message.
+
+```sh
+usage: extract-turf.py [-h] [-r REMOTE] [-o OUTPUT] [-c] [--stdout] [--pagelim PAGELIM] [-v] [input ...]
+
+positional arguments:
+  input                Input turf pdf(s).
+
+options:
+  -h, --help           show this help message and exit
+  -r, --remote REMOTE  URL for google spreadsheet to update
+  -o, --output OUTPUT  Output file name. Default: turf_list_YYYYmmdd-HHMM-SS.csv
+  -c, --copy           Copy combined turf data output to system clipboard. Default: False
+  --stdout             Send output to stdout instead of to file. Default: False
+  --pagelim PAGELIM    Process up to this page in the pdf. Default: 3
+  -v, --verbose        Increase verbosity (e.g. -v, -vv).
+```
+
+Point the script at a folder of pdfs to extract turf information.
+
+```sh
+uv run extract-turf.py <path to turf PDF folder>
+```
+
+Specifying a url (`--remote`) will also attempt to upload the data to that
+spreadsheet. Additional formatting may also be applied at this point.
+
+```sh
+uv run extract-turf.py <path to turf PDF folder> -r <url of target google sheet>
+```
+
+
 # High-Level Workflow
 Use a python script on a folder of turf PDFs to output CSV.
 
