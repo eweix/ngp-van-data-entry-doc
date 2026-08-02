@@ -41,6 +41,7 @@ def turf_pdf_to_csv(target_dir_list, is_stdout):
                         "C" : "C",
                         "T" : "T",
                         "V" : "V",
+                        "Vge" : "V",
                     }
                     civil_district = region_name_split[2]
                     for district_type_full in district_types.keys():
