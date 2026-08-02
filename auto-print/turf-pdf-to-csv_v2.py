@@ -9,11 +9,12 @@
 import re
 import logging
 import sys
-import pyperclip
 import csv
 import time
 
+import pyperclip
 import ezsheets
+
 from pypdf import PdfReader
 from argparse import ArgumentParser
 from pathlib import Path
@@ -50,17 +51,21 @@ def extract_data(
         r"(?P<code>\d+-\d+)\s*(?P<turf>Turf \d+)\s*\d+\s*(?P<num_doors>\d+)"
     )
     pr = re.compile(
-        r"^Turf Packet Summary.*?([a-zA-z\d]*_*[\sa-zA-z]*_*(.*?)(City|C|Village|V|Town|T])?_*(\d+)_*.*)"
+        r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|V|Town|T])?_(\d+)_.*)"
     )
     logging.debug(f"{p.name} : extracting text from all pages")
-    pagelim = None if pagelim == -1 else pagelim
     data = list()
-    for i, page in enumerate(PdfReader(p).pages[:pagelim]):
+    if pagelim == -1:
+        pages = enumerate(PdfReader(p).pages)
+    else:
+        pages = enumerate(PdfReader(p).pages[:pagelim])
+    for i, page in pages:
         text = page.extract_text(extraction_mode="layout")
         # metadata exists only on first page
         if i == 0:
             meta = list(next(pr.finditer(text)).groups())
             assert len(meta) == 4
+            logging.debug(f"{p.name} : metadata is {meta}")
             # normalize district type
             meta[2] = {
                 "City": "C",
@@ -117,8 +122,7 @@ def update_sheet(url, data):
     return
 
 
-def _parse_args():
-    """return arguments and inputs from the argument parser"""
+def main():
     parser = ArgumentParser()
     parser.add_argument(
         "input",
@@ -134,6 +138,7 @@ def _parse_args():
         default=None,
         help="URL for google spreadsheet to update",
     )
+    parser.add_argument(
         "-o",
         "--output",
         type=Path,
@@ -154,6 +159,7 @@ def _parse_args():
     parser.add_argument(
         "--pagelim",
         default=3,
+        type=int,
         help="Process up to this page in the pdf.\nDefault: 3",
     )
     parser.add_argument(
@@ -206,11 +212,6 @@ def _parse_args():
     else:
         logging.debug("output: stdout")
 
-    return args, files
-
-
-def main():
-    args, files = _parse_args()
     logging.info("exporting turf data...")
     data = [
         [
