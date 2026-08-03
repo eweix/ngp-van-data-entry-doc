@@ -27,7 +27,7 @@ TIMESTAMP = time.strftime("%Y%m%d-%H%M-%S")
 
 def extract_data(
     p: Path,
-    region_rename_csv: Path,
+    region_rename_csv,
     pagelim=3,
 ):
     """Extract turf data from the pdf
