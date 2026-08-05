@@ -129,7 +129,7 @@ def post_process(data, district_rename_csv, priorities_csv):
             for i, r in enumerate(data[1:])
         ],
         ["ward_from_turf"] + ward_turf,
-        ["list_number"] + [r[5] for r in data[1:]],
+        ["list_number"] + [r[4] for r in data[1:]],
         ["turf_number"] + [r[5] for r in data[1:]],
         ["door_count"] + [r[6] for r in data[1:]],
         ["duplicate_finder"] + dup_finder,
