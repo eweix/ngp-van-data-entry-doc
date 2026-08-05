@@ -9,3 +9,10 @@ auto-print/R05B_Portage_Sample
 **/~*
 !*/district_rename_csv.csv
 !*/region_rename_csv.csv
+
+# oath stuff for gdrive integration
+*credentials-sheets.json
+token-drive.pickle
+token-sheets.pickle
+!auto-print/misnames.csv
+!auto-print/prios.csv
