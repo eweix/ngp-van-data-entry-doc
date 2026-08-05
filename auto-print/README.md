@@ -24,20 +24,29 @@ uploads them as new worksheets in a specified google spreadsheet.
 Calling `extract-turf.py` without any arguments will show the help message.
 
 ```sh
-usage: extract-turf.py [-h] [-r REMOTE] [-o OUTPUT] [-c] [--stdout] [--pagelim PAGELIM] [-v] [input ...]
+usage: extract-turf.py [-h] [-r REMOTE] [-o OUTPUT] [-c] [--stdout] [--pagelim PAGELIM] [--district-rename DISTRICT_RENAME] [--region-rename REGION_RENAME]
+                       [--priorities PRIORITIES] [-v]
+                       [input ...]
 
 positional arguments:
-  input                Input turf pdf(s).
+  input                 Input turf pdf(s).
 
 options:
-  -h, --help           show this help message and exit
-  -r, --remote REMOTE  URL for google spreadsheet to update
-  -o, --output OUTPUT  Output file name. Default: turf_list_YYYYmmdd-HHMM-SS.csv
-  -c, --copy           Copy combined turf data output to system clipboard. Default: False
-  --stdout             Send output to stdout instead of to file. Default: False
-  --pagelim PAGELIM    Process up to this page in the pdf. Default: 3
-  -v, --verbose        Increase verbosity (e.g. -v, -vv).
-```
+  -h, --help            show this help message and exit
+  -r, --remote REMOTE   URL for google spreadsheet to update
+  -o, --output OUTPUT   Output file name. Default: turf_list_YYYYmmdd-HHMM-SS.csv
+  -c, --copy            Copy combined turf data output to system clipboard. Default: False
+  --stdout              Send output to stdout instead of to file. Default: false
+  --pagelim PAGELIM     Process up to this page in the pdf. Default: 3
+  --district-rename DISTRICT_RENAME
+                        To rename civil districts, specify a CSV file with contents in the format of: old_name,new_name. For example: "StevensPt","Stevens Point"
+  --region-rename REGION_RENAME
+                        To rename the entire region, specify a CSV file with contents in the format of: old_name,new_name. This is useful when the name is missing
+                        pieces, like ward number or civil district type
+  --priorities PRIORITIES
+                        To assign priorities to civil districts, specify a CSV file ith contents in the format of: region,priority. This is useful for automatically
+                        sorting by canvassing priority.
+  -v, --verbose         Increase verbosity (e.g. -v, -vv).```
 
 Point the script at a folder of pdfs to extract turf information.
 
