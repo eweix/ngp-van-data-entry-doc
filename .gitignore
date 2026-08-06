@@ -16,3 +16,4 @@ token-drive.pickle
 token-sheets.pickle
 !auto-print/misnames.csv
 !auto-print/prios.csv
+.env

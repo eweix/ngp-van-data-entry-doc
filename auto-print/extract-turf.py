@@ -54,8 +54,10 @@ def extract_data(
         r"(?P<code>\d+-\d+)\s*(?P<turf>Turf \d+)\s*\d+\s*(?P<num_doors>\d+)"
     )
     pr = re.compile(
-        r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|Vge|V|Town|T])?_(\d+)_.*)"
+        r"^Turf Packet Summary.*?([^_\s]*_+[^_]*_+([^_]*?)(City|C|Village|villiage|Vge|V|Town|T])?_+(\d+).*)",
+        re.IGNORECASE,
     )
+    dr = re.compile(r".*(Village|Villiage|Vge|City|Town).*", re.IGNORECASE)
     logger.debug(f"{p.name}: extracting text from all pages")
     data = list()
     if region_rename_csv:
@@ -70,6 +72,7 @@ def extract_data(
         pages = enumerate(PdfReader(p).pages[:pagelim])
     for i, page in pages:
         text = page.extract_text(extraction_mode="layout")
+        logger.debug(f"{p.name}: first line\n{text.split('\n')[0]}")
         # metadata exists only on first page
         if i == 0:
             meta = list(next(pr.finditer(text)).groups())
@@ -78,15 +81,22 @@ def extract_data(
             assert len(meta) == 4
             logger.debug(f"{p.name}: metadata is {meta}")
             # normalize district type
-            meta[2] = {
-                "City": "C",
-                "Town": "T",
-                "Village": "V",
-                "C": "C",
-                "T": "T",
-                "V": "V",
+            dists = {
+                "city": "C",
+                "town": "T",
+                "village": "V",
+                "villiage": "V",
+                "c": "C",
+                "t": "T",
+                "v": "V",
                 "Vge": "V",
-            }[meta[2]]
+                None: None,
+            }
+            meta[2] = (
+                dists[meta[2].lower()]
+                if meta[2]
+                else list(next(dr.finditer(text)).groups())[0]
+            )
             meta[3] = meta[3].zfill(4)  # left pad ward to 4 digits
         data.extend(meta + list(m.groups()) for m in tr.finditer(text))
         logger.debug(
@@ -129,7 +139,7 @@ def post_process(data, district_rename_csv, priorities_csv):
             for i, r in enumerate(data[1:])
         ],
         ["ward_from_turf"] + ward_turf,
-        ["list_number"] + [r[5] for r in data[1:]],
+        ["list_number"] + [r[4] for r in data[1:]],
         ["turf_number"] + [r[5] for r in data[1:]],
         ["door_count"] + [r[6] for r in data[1:]],
         ["duplicate_finder"] + dup_finder,
