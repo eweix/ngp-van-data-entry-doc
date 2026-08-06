@@ -54,7 +54,7 @@ def extract_data(
         r"(?P<code>\d+-\d+)\s*(?P<turf>Turf \d+)\s*\d+\s*(?P<num_doors>\d+)"
     )
     pr = re.compile(
-        r"^Turf Packet Summary.*?([a-zA-z\d]*_[\sa-zA-z]*_(.*?)(City|C|Village|villiage|Vge|V|Town|T])?_(\d+)_.*)",
+        r"^Turf Packet Summary.*?([^_\s]*_+[^_]*_+([^_]*?)(City|C|Village|villiage|Vge|V|Town|T])?_+(\d+)_+.*)",
         re.IGNORECASE,
     )
     dr = re.compile(r".*(Village|Villiage|Vge|City|Town).*", re.IGNORECASE)
@@ -72,6 +72,7 @@ def extract_data(
         pages = enumerate(PdfReader(p).pages[:pagelim])
     for i, page in pages:
         text = page.extract_text(extraction_mode="layout")
+        logger.debug(f"{p.name}: first line\n{text.split('\n')[0]}")
         # metadata exists only on first page
         if i == 0:
             meta = list(next(pr.finditer(text)).groups())
